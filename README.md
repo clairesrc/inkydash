@@ -1,9 +1,5 @@
 # InkyDash
-https://i.postimg.cc/Vv2YZPR6/4-E40001-B-48-DD-4559-B124-77-F62-E2-BC422.jpg
 A WFH-oriented eInk dashboard for your Raspberry Pi.
-
-![4-E40001-B-48-DD-4559-B124-77-F62-E2-BC422](https://user-images.githubusercontent.com/22794371/187059959-0789acba-f0e6-4d9e-a4c3-8436e57cccda.jpg)
-
 
 ## Requirements
 ### Hardware
@@ -37,6 +33,9 @@ crontab -e
 # At end of file, add:
 */4 * * * * /path/to/inkydash.py > /tmp/inkydash.log
 ```
+
+## Preview
+![free](https://user-images.githubusercontent.com/22794371/187060085-4ec81a1e-4383-4cca-8753-4e17a80fa337.jpg)
 
 ## Feature Roadmap
 
