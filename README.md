@@ -44,4 +44,9 @@ In Progress:
 - Weather
 
 Planned:
-- N/a
+- Client/server architecture
+- Decouple screen refresh from API calls
+- Cache API results
+- Module system
+- Personalization options
+- Improved dashboard design
