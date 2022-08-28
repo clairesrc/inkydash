@@ -1,5 +1,5 @@
 # InkyDash
-A WFH-oriented eInk dashboard for your Raspberry Pi.
+A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way for my wife to quickly check if I'm currently in a meeting, so I hacked this together.
 
 ## Requirements
 ### Hardware
