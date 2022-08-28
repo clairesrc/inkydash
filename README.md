@@ -12,12 +12,7 @@ Raspberry Pi settings:
 - GPIO enabled
 - SPI enabled
 
-Python3 + libraries:
-- httplib2
-- google-api-python-client
-- oauth2client
-- inky
-- pytz
+Python3 + python3-pil + python3-pip
 ## Initial Setup
 First [create a project](https://developers.google.com/workspace/guides/create-project) and [create desktop application credentials](https://developers.google.com/workspace/guides/create-credentials) through the Google console.
 Save the credentials Oauth JSON file in the same directory. Its name should match `CLIENT_SECRET_FILE` in inkydash.py; default is `inkydash.apps.googleusercontent.com.json`.
