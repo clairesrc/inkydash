@@ -26,7 +26,7 @@ APPLICATION_NAME = 'InkyDash'
 IMAGE_FILENAME = "/tmp/inkydash.png"
 SCREEN_WIDTH=600
 SCREEN_HEIGHT=488
-FONT_FILENAME = 'Pillow/Tests/fonts/FreeMono.ttf'
+FONT_FILENAME = 'Pillow/Tests/fonts/NotoSansMono-Regular.ttf'
 
 GEO_API_KEY = os.getenv("IPSTACK_GEOIP_API_SECRET")
 WEATHER_API_KEY = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
@@ -104,7 +104,7 @@ def get_freebusy():
 def get_weather(secret, lat, lon):
     """Queries OpenWeatherMap
     """
-    return get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={secret}").json()['main']
+    return get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&appid={secret}").json()['main']
 
 def get_geo(secret):
     """Queries IPStack for IP geolocation
@@ -132,20 +132,25 @@ def draw_image(state):
     weather_feels_like_temp = state['weather']['feels_like']
 
     # create an image
-    out = Image.new('RGB', (SCREEN_WIDTH, SCREEN_HEIGHT), (255, 255, 255))
+    out = Image.new('RGB', (SCREEN_WIDTH, SCREEN_HEIGHT), (0, 0, 0))
 
     # font
     font_big = ImageFont.truetype(FONT_FILENAME, 90)
-    font_medium = ImageFont.truetype(FONT_FILENAME, 64)
+    font_medium = ImageFont.truetype(FONT_FILENAME, 48)
+    font_small = ImageFont.truetype(FONT_FILENAME, 24)
 
     # get a drawing context
     d = ImageDraw.Draw(out)
 
-    # draw freebusy
-    d.multiline_text((10, 10), freebusy, font=font_big, fill=(0, 0, 0))
+    # draw labels
+    d.multiline_text((10, 0), 'STATUS', font=font_small, fill=(200, 200, 200))
+    d.multiline_text((10, 110), 'WEATHER', font=font_small, fill=(200, 200, 200))
 
     # draw freebusy
-    d.multiline_text((10, 90), f"Temperature: {weather_feels_like_temp}", font=font_medium, fill=(0, 0, 0))
+    d.multiline_text((5, 10), f"{freebusy}", font=font_big, fill=(255, 255, 255))
+
+    # draw freebusy
+    d.multiline_text((5, 120), f"{weather_feels_like_temp}°F", font=font_medium, fill=(255, 255, 255))
 
     # save image
     out.save(IMAGE_FILENAME, 'PNG')
