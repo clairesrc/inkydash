@@ -1,17 +1,22 @@
 # InkyDash
 A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way for my wife to quickly check if I'm currently in a meeting, so I hacked this together.
 
+## Preview
+![free](https://user-images.githubusercontent.com/22794371/188255893-9b05c94a-6bd3-4ccb-8c20-d672e9773510.jpeg)
+
 ## Requirements
 ### Hardware
 - Raspberry Pi with a browser installed (tested on a 4B+ model running the graphical Raspbian environment)
 - [inky screen](https://shop.pimoroni.com/products/inky-impression-5-7?variant=32298701324371)
 - keyboard + mouse + Pi-compatible HDMI screen for initial setup
 ### Software
-Raspberry Pi settings:
+#### Raspberry Pi settings
 - GPIO enabled
 - SPI enabled
-
-Python3 + python3-pil + python3-pip + fonts-noto-ui-core
+#### raspbian packages
+- python3
+- python3-pip
+- fonts-noto-ui-core
 ## Initial Setup
 First [create a project](https://developers.google.com/workspace/guides/create-project) and [create desktop application credentials](https://developers.google.com/workspace/guides/create-credentials) through the Google console.
 Save the credentials Oauth JSON file in the same directory. Its name should match `CLIENT_SECRET_FILE` in inkydash.py; default is `inkydash.apps.googleusercontent.com.json`.
@@ -41,10 +46,6 @@ crontab -e
 # At end of file, add:
 */4 * * * * /path/to/inkydash.py > /tmp/inkydash.log
 ```
-
-## Preview
-![free](https://user-images.githubusercontent.com/22794371/188255893-9b05c94a-6bd3-4ccb-8c20-d672e9773510.jpeg)
-
 
 ## Feature Roadmap
 
