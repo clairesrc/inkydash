@@ -2,6 +2,7 @@
 
 import httplib2
 import sys
+from dateutil import parser
 import os
 from apiclient import discovery
 import oauth2client
@@ -28,8 +29,11 @@ SCREEN_WIDTH=600
 SCREEN_HEIGHT=488
 FONT_FILENAME = 'Pillow/Tests/fonts/NotoSansMono-Regular.ttf'
 
+TIMEZONE = os.getenv("APP_TIMEZONE")
 GEO_API_KEY = os.getenv("IPSTACK_GEOIP_API_SECRET")
 WEATHER_API_KEY = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
+
+api_cache = {}
 
 dashboard_state = {}
 
@@ -84,18 +88,21 @@ def get_freebusy():
     service = discovery.build('calendar', 'v3', http=http)
     now = datetime.datetime.now().astimezone()
 
-    # get upcoming event
-    eventsResult = service.events().list(
-        calendarId='primary', timeMin=now.isoformat(), maxResults=1, singleEvents=True,
-        orderBy='startTime').execute()
-    events = eventsResult.get('items', [])
+    eventsResult = service.freebusy().query(body={
+      'timeMin': now.isoformat(),
+      'timeMax': (now + datetime.timedelta(hours=24)).isoformat(),
+      'timeZone': TIMEZONE,
+      'items': [{"id": 'primary'}]
+    }).execute()
+    busy = eventsResult[u'calendars']['primary']['busy']
+    if len(busy) == 0:
+        return FREE_INDICATOR
 
-    if not events:
-        print('No upcoming events found.')
-    for event in events:
+    for event in busy:
         # determine free/busy status
-        event_start = datetime.datetime.fromisoformat(event['start'].get('dateTime'))
-        event_end = datetime.datetime.fromisoformat(event['end'].get('dateTime'))
+        event_start = parser.parse(event['start'])
+        event_end = parser.parse(event['end'])
+        print(event_start)
         if now >= event_start and now >= event_end:
             return BUSY_INDICATOR
         else:
@@ -104,12 +111,16 @@ def get_freebusy():
 def get_weather(secret, lat, lon):
     """Queries OpenWeatherMap
     """
-    return get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&appid={secret}").json()['main']
+    return get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units=imperial&appid={secret}").json()
 
 def get_geo(secret):
-    """Queries IPStack for IP geolocation
+    """Queries for IP geolocation
     """
-    return get(f"http://api.ipstack.com/{get_ip()}?access_key={secret}").json()
+    geo = get(f"http://ip-api.com/json/{get_ip()}").json()
+    if geo['status'] == 'success':
+        return geo
+    else:
+        return False
 
 def get_ip():
     """Queries IPify for public IPv4
@@ -120,16 +131,22 @@ def get_state():
     """Refresh & get dashboard state.
     """
     geo = get_geo(GEO_API_KEY)
+    weather = False
+    if geo:
+        weather = get_weather(WEATHER_API_KEY, geo['lat'], geo['lon'])
     return {
         'freebusy': get_freebusy(),
-        'weather': get_weather(WEATHER_API_KEY, geo['latitude'], geo['longitude'])
+        'weather': weather
     }
 
 def draw_image(state):
     """Create PNG image from dashboard state.
     """
     freebusy = state['freebusy']
-    weather_feels_like_temp = state['weather']['feels_like']
+
+    if state['weather']:
+        weather_feels_like_temp = state['weather']['main']['feels_like']
+        weather_status = state['weather']['weather'][0]['main']
 
     # create an image
     out = Image.new('RGB', (SCREEN_WIDTH, SCREEN_HEIGHT), (0, 0, 0))
@@ -143,14 +160,15 @@ def draw_image(state):
     d = ImageDraw.Draw(out)
 
     # draw labels
-    d.multiline_text((10, 0), 'STATUS', font=font_small, fill=(200, 200, 200))
-    d.multiline_text((10, 110), 'WEATHER', font=font_small, fill=(200, 200, 200))
+    d.multiline_text((10, 0), 'MEETING STATUS', font=font_small, fill=(200, 200, 200))
+    d.multiline_text((10, 130), 'WEATHER', font=font_small, fill=(200, 200, 200))
 
     # draw freebusy
     d.multiline_text((5, 10), f"{freebusy}", font=font_big, fill=(255, 255, 255))
 
-    # draw freebusy
-    d.multiline_text((5, 120), f"{weather_feels_like_temp}°F", font=font_medium, fill=(255, 255, 255))
+    if state['weather']:
+        # draw weather
+        d.multiline_text((5, 155), f"{weather_feels_like_temp}°F | {weather_status}", font=font_medium, fill=(255, 255, 255))
 
     # save image
     out.save(IMAGE_FILENAME, 'PNG')

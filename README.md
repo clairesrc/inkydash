@@ -25,9 +25,17 @@ pip install -r requirements.txt
 ```
 Click the link in terminal to authenticate the Google account you want to give calendar access to.
 
-Once this completes, the script should be ready to get your calendar data without needing to re-complete the flow. You can rerun `./inkydash.py` to confirm. At this point you should also be able to see it draw to your Inky screen.
+Once this completes, the script should be ready to get your calendar data without needing to re-complete the flow. 
 
-Add a cron job to refresh the screen every 4 minutes:
+Add a .env file and set the following values:
+```
+OPENWEATHERMAP_WEATHER_API_SECRET=
+TIMEZONE=
+```
+
+You can then run `./inkydash.py` as a test to see it draw to your Inky screen.
+
+Finally add a cron job to refresh the screen every 4 minutes:
 ```
 crontab -e
 # At end of file, add:
@@ -41,8 +49,6 @@ crontab -e
 
 Done:
 - Google Calendar Free/Busy
-
-In Progress:
 - Weather
 
 Planned:
@@ -51,4 +57,3 @@ Planned:
 - Cache API results
 - Module system
 - Personalization options
-- Improved dashboard design
