@@ -43,7 +43,8 @@ crontab -e
 ```
 
 ## Preview
-![free](https://user-images.githubusercontent.com/22794371/187060085-4ec81a1e-4383-4cca-8753-4e17a80fa337.jpg)
+![free](https://user-images.githubusercontent.com/22794371/188255893-9b05c94a-6bd3-4ccb-8c20-d672e9773510.jpeg)
+
 
 ## Feature Roadmap
 
