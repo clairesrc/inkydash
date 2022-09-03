@@ -32,6 +32,8 @@ Click the link in terminal to authenticate the Google account you want to give c
 
 Once this completes, the script should be ready to get your calendar data without needing to re-complete the flow. 
 
+Next get an API secret key from [Openweathermap](https://openweathermap.org). 
+
 Add a .env file and set the following values:
 ```
 OPENWEATHERMAP_WEATHER_API_SECRET=
