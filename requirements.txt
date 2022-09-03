@@ -4,3 +4,5 @@ inky
 pytz
 Pillow
 python-dotenv
+pytest-dotenv
+pytest

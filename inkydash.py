@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 load_dotenv()  
 flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 
+
 FREE_INDICATOR = 'FREE'
 BUSY_INDICATOR = 'BUSY'
 
@@ -30,10 +31,7 @@ FONT_FILENAME = 'Pillow/Tests/fonts/FreeMono.ttf'
 GEO_API_KEY = os.getenv("IPSTACK_GEOIP_API_SECRET")
 WEATHER_API_KEY = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
 
-dashboard_state = {
-    "freebusy": "",
-    "weather": ""
-}
+dashboard_state = {}
 
 def send_to_screen():
     """Sends image file to Inky screen.
@@ -51,7 +49,7 @@ def send_to_screen():
     inky.set_image(resizedimage, saturation=saturation)
     inky.show()
 
-def get_credentials():
+def get_google_credentials():
     """Gets valid user credentials from storage.
     If nothing has been stored, or if the stored credentials are invalid,
     the OAuth2 flow is completed to obtain the new credentials.
@@ -81,7 +79,7 @@ def get_freebusy():
     10 events on the user's calendar.
     """
     # setup
-    credentials = get_credentials()
+    credentials = get_google_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
     now = datetime.datetime.now().astimezone()
@@ -116,7 +114,7 @@ def get_geo(secret):
 def get_ip():
     """Queries IPify for public IPv4
     """
-    return get('https://api.ipify.org').text
+    return get(f"https://api.ipify.org").text
 
 def get_state():
     """Refresh & get dashboard state.
@@ -136,17 +134,18 @@ def draw_image(state):
     # create an image
     out = Image.new('RGB', (SCREEN_WIDTH, SCREEN_HEIGHT), (255, 255, 255))
 
-    # get a font
-    fnt = ImageFont.truetype(FONT_FILENAME, 90)
+    # font
+    font_big = ImageFont.truetype(FONT_FILENAME, 90)
+    font_medium = ImageFont.truetype(FONT_FILENAME, 64)
 
     # get a drawing context
     d = ImageDraw.Draw(out)
 
     # draw freebusy
-    d.multiline_text((10, 10), freebusy, font=fnt, fill=(0, 0, 0))
+    d.multiline_text((10, 10), freebusy, font=font_big, fill=(0, 0, 0))
 
     # draw freebusy
-    d.multiline_text((90, 10), f"Temperature: {weather_feels_like_temp}", font=fnt, fill=(0, 0, 0))
+    d.multiline_text((10, 90), f"Temperature: {weather_feels_like_temp}", font=font_medium, fill=(0, 0, 0))
 
     # save image
     out.save(IMAGE_FILENAME, 'PNG')
