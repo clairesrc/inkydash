@@ -35,7 +35,7 @@ dashboard_state = {
     "weather": ""
 }
 
-def send_to_screen(filename):
+def send_to_screen():
     """Sends image file to Inky screen.
     Sets up Inky API, opens given filename, and draws image.
     """
