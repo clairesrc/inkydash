@@ -11,11 +11,13 @@ from inky.auto import auto
 import pytz
 import datetime
 import argparse
-
+from requests import get
+from dotenv import load_dotenv
+load_dotenv()  
 flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 
-FREE_INDICATOR = "FREE"
-BUSY_INDICATOR = "BUSY"
+FREE_INDICATOR = 'FREE'
+BUSY_INDICATOR = 'BUSY'
 
 SCOPES = 'https://www.googleapis.com/auth/calendar'
 CLIENT_SECRET_FILE = 'inkydash.apps.googleusercontent.com.json' # oauth2 json credentials from google console
@@ -23,6 +25,15 @@ APPLICATION_NAME = 'InkyDash'
 IMAGE_FILENAME = "/tmp/inkydash.png"
 SCREEN_WIDTH=600
 SCREEN_HEIGHT=488
+FONT_FILENAME = 'Pillow/Tests/fonts/FreeMono.ttf'
+
+GEO_API_KEY = os.getenv("IPSTACK_GEOIP_API_SECRET")
+WEATHER_API_KEY = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
+
+dashboard_state = {
+    "freebusy": "",
+    "weather": ""
+}
 
 def send_to_screen(filename):
     """Sends image file to Inky screen.
@@ -33,7 +44,7 @@ def send_to_screen(filename):
     saturation = 0.5
 
     # open source image
-    image = Image.open(filename)
+    image = Image.open(IMAGE_FILENAME)
     resizedimage = image.resize(inky.resolution)
 
     # draw image
@@ -65,9 +76,8 @@ def get_credentials():
         print('Storing credentials to ' + credential_path)
     return credentials
 
-def get_data():
-    """Shows basic usage of the Google Calendar API.
-    Creates a Google Calendar API service object and outputs a list of the next
+def get_freebusy():
+    """Creates a Google Calendar API service object and outputs a list of the next
     10 events on the user's calendar.
     """
     # setup
@@ -87,30 +97,63 @@ def get_data():
     for event in events:
         # determine free/busy status
         event_start = datetime.datetime.fromisoformat(event['start'].get('dateTime'))
-        event_end = datetime.datetime.fromisoformat(event["end"].get("dateTime"))
+        event_end = datetime.datetime.fromisoformat(event['end'].get('dateTime'))
         if now >= event_start and now >= event_end:
             return BUSY_INDICATOR
         else:
             return FREE_INDICATOR
 
-def draw_image(text, filename):
+def get_weather(secret, lat, lon):
+    """Queries OpenWeatherMap
+    """
+    return get(f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={secret}").json()['main']
+
+def get_geo(secret):
+    """Queries IPStack for IP geolocation
+    """
+    return get(f"http://api.ipstack.com/{get_ip()}?access_key={secret}").json()
+
+def get_ip():
+    """Queries IPify for public IPv4
+    """
+    return get('https://api.ipify.org').text
+
+def get_state():
+    """Refresh & get dashboard state.
+    """
+    geo = get_geo(GEO_API_KEY)
+    return {
+        'freebusy': get_freebusy(),
+        'weather': get_weather(WEATHER_API_KEY, geo['latitude'], geo['longitude'])
+    }
+
+def draw_image(state):
+    """Create PNG image from dashboard state.
+    """
+    freebusy = state['freebusy']
+    weather_feels_like_temp = state['weather']['feels_like']
+
     # create an image
-    out = Image.new("RGB", (SCREEN_WIDTH, SCREEN_HEIGHT), (255, 255, 255))
+    out = Image.new('RGB', (SCREEN_WIDTH, SCREEN_HEIGHT), (255, 255, 255))
 
     # get a font
-    fnt = ImageFont.truetype("Pillow/Tests/fonts/FreeMono.ttf", 40)
+    fnt = ImageFont.truetype(FONT_FILENAME, 90)
 
     # get a drawing context
     d = ImageDraw.Draw(out)
 
-    # draw multiline text
-    d.multiline_text((10, 10), text, font=fnt, fill=(0, 0, 0))
-    out.save(filename, "PNG")
+    # draw freebusy
+    d.multiline_text((10, 10), freebusy, font=fnt, fill=(0, 0, 0))
+
+    # draw freebusy
+    d.multiline_text((90, 10), f"Temperature: {weather_feels_like_temp}", font=fnt, fill=(0, 0, 0))
+
+    # save image
+    out.save(IMAGE_FILENAME, 'PNG')
 
 def main():
-    image_text = get_data()
-    draw_image(image_text, IMAGE_FILENAME)
-    # send_to_screen(IMAGE_FILENAME)
+    draw_image(get_state())
+    send_to_screen()
 
 if __name__ == '__main__':
     main()
