@@ -74,10 +74,11 @@ def get_data():
     credentials = get_credentials()
     http = credentials.authorize(httplib2.Http())
     service = discovery.build('calendar', 'v3', http=http)
+    now = datetime.datetime.now().astimezone()
 
     # get upcoming event
     eventsResult = service.events().list(
-        calendarId='primary', timeMin=now, maxResults=1, singleEvents=True,
+        calendarId='primary', timeMin=now.isoformat(), maxResults=1, singleEvents=True,
         orderBy='startTime').execute()
     events = eventsResult.get('items', [])
 
@@ -85,7 +86,6 @@ def get_data():
         print('No upcoming events found.')
     for event in events:
         # determine free/busy status
-        now = datetime.datetime.now().astimezone()
         event_start = datetime.datetime.fromisoformat(event['start'].get('dateTime'))
         event_end = datetime.datetime.fromisoformat(event["end"].get("dateTime"))
         if now >= event_start and now >= event_end:
@@ -110,7 +110,7 @@ def draw_image(text, filename):
 def main():
     image_text = get_data()
     draw_image(image_text, IMAGE_FILENAME)
-    send_to_screen(IMAGE_FILENAME)
+    # send_to_screen(IMAGE_FILENAME)
 
 if __name__ == '__main__':
     main()
