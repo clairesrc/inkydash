@@ -59,3 +59,7 @@ Planned:
 - Cache API results
 - Module system
 - Personalization options
+
+## FAQ
+### I'm having trouble completing the Oauth flow from the Raspberry Pi/don't want the Raspbian graphical environment/don't have a display to spare for initial setup
+You can complete the Oauth flow from your PC by cloning this repo on it and running `./inkydash`, then copying over `~/.credentials/inkydash.json` and `./inkydash.apps.googleusercontent.com.json` to your Raspberry Pi using `scp`.
