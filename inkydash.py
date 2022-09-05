@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-
+import sys
 import os
 from PIL import Image, ImageDraw, ImageFont
 from inky.auto import auto
 from requests import get
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv(sys.argv[1])
 
 
 IMAGE_FILENAME = "/tmp/inkydash.png"

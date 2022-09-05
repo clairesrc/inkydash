@@ -101,12 +101,11 @@ def get_ip():
 
 def refresh_state():
     """Refreshes state dict from external APIs"""
-    current_time = get_time()
     geo = get_geo()
     weather = False
     if geo:
         weather = get_weather(WEATHER_API_KEY, geo["lat"], geo["lon"])
-    write_state({"freebusy": get_freebusy(), "weather": weather, "time": current_time})
+    write_state({"freebusy": get_freebusy(), "weather": weather, "time": ""})
 
 
 def write_state(data: dict):
@@ -118,6 +117,7 @@ def get_state():
     """Gets dashboard state"""
     if len(dashboard_state["data"]) == 0:
         refresh_state()
+    dashboard_state["data"]["time"] = get_time()
     return dashboard_state
 
 

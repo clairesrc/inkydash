@@ -70,7 +70,7 @@ Finally add 2 cron jobs to refresh external data every 4 minutes, and re-draw th
 ```
 $ crontab -e
 # At end of file, add:
-*/1 * * * * /path/to/inkydash.py > /tmp/inkydash-client.log
+*/1 * * * * /path/to/inkydash.py /path/to/.env > /tmp/inkydash-client.log
 */4 * * * * wget http://localhost:8080/refresh -o /tmp/inkydash-server-refresh.log
 ```
 
