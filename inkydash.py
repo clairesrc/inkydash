@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 
 import os
-from oauth2client import client, file, tools
 from PIL import Image, ImageDraw, ImageFont
 from inky.auto import auto
-import argparse
 from requests import get
 from dotenv import load_dotenv
 
 load_dotenv()
-flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
 
 
 IMAGE_FILENAME = "/tmp/inkydash.png"

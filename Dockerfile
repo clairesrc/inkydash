@@ -4,15 +4,14 @@ FROM python:3.10-alpine
 ENV OPENWEATHERMAP_WEATHER_API_SECRET ""
 ENV APP_TIMEZONE "America/Chicago"
 
-RUN apk add build-base linux-headers font-noto zlib-dev libjpeg-turbo-dev
 RUN pip install --upgrade pip
 
 RUN mkdir /inkydash
 WORKDIR /inkydash
 
-ADD requirements.txt .
+ADD server_requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN pip install -r server_requirements.txt
 
 RUN mkdir /inkydash/config
 RUN mkdir /inkydash/cache

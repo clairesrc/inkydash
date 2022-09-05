@@ -2,9 +2,6 @@ import httplib2
 from dateutil import parser
 import os
 from apiclient import discovery
-import oauth2client
-from oauth2client import client, tools, file
-from inky.auto import auto
 import datetime
 from flask import Flask
 from requests import get

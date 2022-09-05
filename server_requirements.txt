@@ -1,0 +1,8 @@
+google-api-python-client
+oauth2client
+pytz
+python-dotenv
+pytest-dotenv
+pytest
+python-dateutil
+flask

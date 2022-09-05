@@ -6,9 +6,8 @@ A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way fo
 
 ## Requirements
 ### Hardware
-- Raspberry Pi (tested on a 4B+ model running Raspbian)
-- [inky screen](https://shop.pimoroni.com/products/inky-impression-5-7?variant=32298701324371)
-- keyboard + mouse + Pi-compatible HDMI screen for initial setup
+- Raspberry Pi: tested on a 4B+ model running Raspbian.
+- [Inky screen](https://shop.pimoroni.com/products/inky-impression-5-7?variant=32298701324371): I used the Impression variant, but any of them should work.
 ### Software
 #### Raspberry Pi settings
 - GPIO enabled
@@ -26,7 +25,7 @@ CLone this repo onto both your Raspberry Pi and your PC. You will need to run a 
 
 Complete the Oauth flow from your PC by running:
 ```
-$ pip install -r requirements.txt
+$ pip install -r server_requirements.txt
 $ ./setup.py
 ```
 
@@ -58,13 +57,18 @@ $ sudo systemctl enable docker
 # Log out of your SSH session or reboot your Raspberry Pi to refresh your user group
 ```
 
-Build, then start the server on the Raspberry pi:
+Build, then start the server on the Raspberry Pi:
 ```
 $ docker build -t inkydash-server .
 $ docker compose up -d
 ```
 
-Now you can manually run `./inkydash.py` on the Pi to fetch data and draw it to the screen.
+And, install requirements for the clientside script on the Raspberry Pi:
+```
+$ pip install -r client_requirements.txt
+```
+
+At this you should be able to manually run `./inkydash.py` on the Pi to fetch data and draw it to the screen.
 
 Finally add 2 cron jobs to refresh the data every 5 minutes, and re-draw the screen every minute:
 ```
