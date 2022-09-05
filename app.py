@@ -62,14 +62,22 @@ def get_freebusy():
         return {"status": FREE_INDICATOR, "next": False}
 
     event = busy[0]
-    # determine free/busy status
+    # is the event within two minutes from now?
+    offset_minutes = 2
     event_start = parser.parse(event["start"])
     event_end = parser.parse(event["end"])
+    earlier = now + datetime.timedelta(minutes=-offset_minutes)
+    later = now + datetime.timedelta(minutes=offset_minutes)
 
-    if now >= event_start and now >= event_end:
+    if earlier >= event_start and later >= event_end:
         return {"status": BUSY_INDICATOR, "next": event}
     else:
         return {"status": FREE_INDICATOR, "next": event}
+
+
+def get_time():
+    """Gets current time in AM/PM format"""
+    return datetime.today().strftime("%I:%M %p")
 
 
 def get_weather(secret: str, lat: str, lon: str):
@@ -99,7 +107,7 @@ def refresh_state():
     weather = False
     if geo:
         weather = get_weather(WEATHER_API_KEY, geo["lat"], geo["lon"])
-    write_state({"freebusy": get_freebusy(), "weather": weather})
+    write_state({"freebusy": get_freebusy(), "weather": weather, "time": get_time()})
 
 
 def write_state(data: dict):

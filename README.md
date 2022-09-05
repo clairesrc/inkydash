@@ -66,12 +66,12 @@ $ pip install -r client_requirements.txt
 
 At this you should be able to manually run `./inkydash.py` on the Pi to fetch data and draw it to the screen.
 
-Finally add 2 cron jobs to refresh the data every 5 minutes, and re-draw the screen every minute:
+Finally add 2 cron jobs to refresh external data every 4 minutes, and re-draw the screen every minute:
 ```
 $ crontab -e
 # At end of file, add:
 */1 * * * * /path/to/inkydash.py > /tmp/inkydash-client.log
-*/5 * * * * wget http://localhost:8080/refresh -o /tmp/inkydash-server-refresh.log
+*/4 * * * * wget http://localhost:8080/refresh -o /tmp/inkydash-server-refresh.log
 ```
 
 ## Feature Roadmap

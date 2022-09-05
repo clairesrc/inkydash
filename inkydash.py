@@ -40,6 +40,9 @@ def draw_image(state):
         weather_feels_like_temp = state["weather"]["main"]["feels_like"]
         weather_status = state["weather"]["weather"][0]["main"]
 
+    if state["time"]:
+        current_time = state["time"]
+
     # create an image
     out = Image.new("RGB", (SCREEN_WIDTH, SCREEN_HEIGHT), (0, 0, 0))
 
@@ -54,6 +57,7 @@ def draw_image(state):
     # draw labels
     d.multiline_text((10, 0), "MEETING STATUS", font=font_small, fill=(200, 200, 200))
     d.multiline_text((10, 130), "WEATHER", font=font_small, fill=(200, 200, 200))
+    d.multiline_text((10, 230), "TIME", font=font_small, fill=(200, 200, 200))
 
     # draw freebusy
     d.multiline_text((5, 10), f"{freebusy}", font=font_big, fill=(255, 255, 255))
@@ -63,6 +67,15 @@ def draw_image(state):
         d.multiline_text(
             (5, 155),
             f"{weather_feels_like_temp}°F | {weather_status}",
+            font=font_medium,
+            fill=(255, 255, 255),
+        )
+
+    if state["time"]:
+        # draw time
+        d.multiline_text(
+            (5, 255),
+            f"{current_time}",
             font=font_medium,
             fill=(255, 255, 255),
         )
