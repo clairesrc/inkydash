@@ -55,11 +55,7 @@ $ sudo systemctl start docker
 $ sudo systemctl enable docker
 
 # Log out of your SSH session or reboot your Raspberry Pi to refresh your user group
-```
 
-Build, then start the server on the Raspberry Pi:
-```
-$ docker build -t inkydash-server .
 $ docker compose up -d
 ```
 
