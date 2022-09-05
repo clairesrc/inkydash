@@ -71,7 +71,7 @@ Finally add 2 cron jobs to refresh the data every 5 minutes, and re-draw the scr
 $ crontab -e
 # At end of file, add:
 */1 * * * * /path/to/inkydash.py > /tmp/inkydash-client.log
-*/15 * * * * wget http://localhost:8080/refresh -o /tmp/inkydash-server-refresh.log
+*/5 * * * * wget http://localhost:8080/refresh -o /tmp/inkydash-server-refresh.log
 ```
 
 ## Feature Roadmap
@@ -83,6 +83,5 @@ Done:
 - Decouple screen refresh from API calls
 
 Planned:
-- Cache API results
 - Module system
 - Personalization options
