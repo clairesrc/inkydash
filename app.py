@@ -17,8 +17,6 @@ APPLICATION_NAME = "InkyDash"
 SCOPES = "https://www.googleapis.com/auth/calendar"
 
 TIMEZONE = os.getenv("APP_TIMEZONE")
-
-GEO_API_KEY = os.getenv("IPSTACK_GEOIP_API_SECRET")
 WEATHER_API_KEY = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
 
 api_cache = {}
@@ -77,7 +75,7 @@ def get_freebusy():
 
 def get_time():
     """Gets current time in AM/PM format"""
-    return datetime.today().strftime("%I:%M %p")
+    return datetime.datetime.now().strftime("%I:%M %p")
 
 
 def get_weather(secret: str, lat: str, lon: str):
@@ -87,7 +85,7 @@ def get_weather(secret: str, lat: str, lon: str):
     ).json()
 
 
-def get_geo(secret):
+def get_geo():
     """Queries for IP geolocation"""
     geo = get(f"http://ip-api.com/json/{get_ip()}").json()
     if geo["status"] == "success":
@@ -103,11 +101,12 @@ def get_ip():
 
 def refresh_state():
     """Refreshes state dict from external APIs"""
-    geo = get_geo(GEO_API_KEY)
+    current_time = get_time()
+    geo = get_geo()
     weather = False
     if geo:
         weather = get_weather(WEATHER_API_KEY, geo["lat"], geo["lon"])
-    write_state({"freebusy": get_freebusy(), "weather": weather, "time": get_time()})
+    write_state({"freebusy": get_freebusy(), "weather": weather, "time": current_time})
 
 
 def write_state(data: dict):

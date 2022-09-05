@@ -38,7 +38,7 @@ Next get an API secret key from [Openweathermap](https://openweathermap.org).
 Add a .env file to the inkydash directory on your Raspberry Pi and set the following values:
 ```
 OPENWEATHERMAP_WEATHER_API_SECRET=
-TIMEZONE=
+TZ=America/Chicago
 ```
 
 Also add this line to .env, unmodified:

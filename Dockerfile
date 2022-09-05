@@ -2,7 +2,7 @@ FROM python:3.10-alpine
 # FROM woahbase/alpine-rpigpio:aarch64
 
 ENV OPENWEATHERMAP_WEATHER_API_SECRET ""
-ENV APP_TIMEZONE "America/Chicago"
+ENV TZ "America/Chicago"
 
 RUN pip install --upgrade pip
 
