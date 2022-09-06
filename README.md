@@ -31,7 +31,7 @@ $ ./setup.py
 
 Click the link in terminal to authenticate the Google account you want to give calendar access to. Once this completes, InkyDash should be ready to get your calendar data without needing to re-complete the flow. 
 
-Copy over `~/.credentials/inkydash.json` and `./inkydash.apps.googleusercontent.com.json` to your Raspberry Pi over SSH using `scp`.
+Copy over `./inkydash-credentials/inkydash.json` and `./inkydash-config/inkydash.apps.googleusercontent.com.json` to your Raspberry Pi over SSH using `scp`.
 
 Next get an API secret key from [Openweathermap](https://openweathermap.org). 
 

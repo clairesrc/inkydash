@@ -16,7 +16,7 @@ BUSY_INDICATOR = "BUSY"
 APPLICATION_NAME = "InkyDash"
 SCOPES = "https://www.googleapis.com/auth/calendar"
 
-TIMEZONE = os.getenv("APP_TIMEZONE")
+TIMEZONE = os.getenv("TZ")
 WEATHER_API_KEY = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
 
 api_cache = {}
@@ -47,8 +47,12 @@ def get_freebusy():
         service.freebusy()
         .query(
             body={
-                "timeMin": now.isoformat(),
-                "timeMax": (now + datetime.timedelta(hours=24)).isoformat(),
+                "timeMin": datetime.datetime.combine(now, datetime.datetime.min.time())
+                .astimezone()
+                .isoformat(),
+                "timeMax": datetime.datetime.combine(now, datetime.datetime.max.time())
+                .astimezone()
+                .isoformat(),
                 "timeZone": TIMEZONE,
                 "items": [{"id": "primary"}],
             }
@@ -60,14 +64,9 @@ def get_freebusy():
         return {"status": FREE_INDICATOR, "next": False}
 
     event = busy[0]
-    # is the event within two minutes from now?
-    offset_minutes = 2
-    event_start = parser.parse(event["start"])
-    event_end = parser.parse(event["end"])
-    earlier = now + datetime.timedelta(minutes=-offset_minutes)
-    later = now + datetime.timedelta(minutes=offset_minutes)
+    event_start = parser.parse(event["start"]).astimezone()
 
-    if earlier >= event_start and later >= event_end:
+    if event_start <= now:
         return {"status": BUSY_INDICATOR, "next": event}
     else:
         return {"status": FREE_INDICATOR, "next": event}

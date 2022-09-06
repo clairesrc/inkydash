@@ -4,8 +4,6 @@ services:
     container_name: inkydash-server
     ports:
       - 8080:5000
-    environment:
-      - OPENWEATHERMAP_WEATHER_API_SECRET=${OPENWEATHERMAP_WEATHER_API_SECRET} # set in .env
     volumes: 
       - ./inkydash-credentials:/root/.credentials
       - ./inkydash-config:/inkydash/config
