@@ -64,9 +64,12 @@ def get_freebusy():
         return {"status": FREE_INDICATOR, "next": False}
 
     event = busy[0]
-    event_start = parser.parse(event["start"]).astimezone()
+    event_start = (
+        parser.parse(event["start"]) - datetime.timedelta(minutes=5)
+    ).astimezone()
+    event_end = parser.parse(event["end"]).astimezone()
 
-    if event_start <= now:
+    if event_start <= now <= event_end:
         return {"status": BUSY_INDICATOR, "next": event}
     else:
         return {"status": FREE_INDICATOR, "next": event}
