@@ -6,8 +6,8 @@ from inky.auto import auto
 from requests import get
 from dotenv import load_dotenv
 
-load_dotenv(sys.argv[1])
-
+if len(sys.argv) >= 2:
+    load_dotenv(sys.argv[1])
 
 IMAGE_FILENAME = "/tmp/inkydash.png"
 SCREEN_WIDTH = 600
@@ -33,15 +33,11 @@ def send_to_screen():
 
 
 def draw_image(state):
-    """Create PNG image from dashboard state."""
-    freebusy = state["freebusy"]["status"]
+    """Create PNG image from dashboard state.
+    Needs refactoring to account for dynamic module order, per-module settings etc.
+    """
 
-    if state["weather"]:
-        weather_feels_like_temp = state["weather"]["main"]["feels_like"]
-        weather_status = state["weather"]["weather"][0]["main"]
-
-    if state["time"]:
-        current_time = state["time"]
+    freebusy = state[0]["data"]["status"]
 
     # create an image
     out = Image.new("RGB", (SCREEN_WIDTH, SCREEN_HEIGHT), (0, 0, 0))
@@ -62,7 +58,9 @@ def draw_image(state):
     # draw freebusy
     d.multiline_text((5, 10), f"{freebusy}", font=font_big, fill=(255, 255, 255))
 
-    if state["weather"]:
+    if state[2]:
+        weather_feels_like_temp = state[2]["data"]["weather"]["main"]["feels_like"]
+        weather_status = state[2]["data"]["weather"]["weather"][0]["main"]
         # draw weather
         d.multiline_text(
             (5, 155),
@@ -71,7 +69,8 @@ def draw_image(state):
             fill=(255, 255, 255),
         )
 
-    if state["time"]:
+    if state[1]:
+        current_time = state["time"]
         # draw time
         d.multiline_text(
             (5, 255),
@@ -86,7 +85,9 @@ def draw_image(state):
 
 def main():
     hostname = os.getenv("INKYDASH_SERVER_LOCATION")
-    draw_image(get(f"http://{hostname}/").json()["data"])
+    if hostname == "":
+        hostname = "localhost:8080"
+    draw_image(get(f"http://{hostname}/data").json())
     send_to_screen()
 
 

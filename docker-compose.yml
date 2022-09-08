@@ -1,7 +1,8 @@
+version: "3"
 services:
-  inkydash-server:
-    image: clairesrc/inkydash
-    container_name: inkydash-server
+  inkydash:
+    image: inkydash
+    container_name: inkydash
     ports:
       - 8080:5000
     volumes: 
