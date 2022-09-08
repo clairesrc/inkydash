@@ -16,7 +16,7 @@ A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way fo
 - python3
 - python3-pip
 - fonts-noto-ui-core
-- wget
+
 ## Initial Setup
 First [create a project](https://developers.google.com/workspace/guides/create-project) and [create desktop application credentials](https://developers.google.com/workspace/guides/create-credentials) through the Google console.
 Save the credentials Oauth JSON file as `./inkydash-config/inkydash.apps.googleusercontent.com.json`.
