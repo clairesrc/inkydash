@@ -70,7 +70,7 @@ def draw_image(state):
         )
 
     if state[1]:
-        current_time = state["time"]
+        current_time = state[1]["data"]["time"]
         # draw time
         d.multiline_text(
             (5, 255),
