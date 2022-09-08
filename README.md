@@ -37,9 +37,10 @@ Next get an API secret key from [Openweathermap](https://openweathermap.org).
 
 Adjust the values under `environment` in `docker-compose.yml` to pass down your weather API key and timezone, or define them in an `.env` file so they persist across git pulls.
 
-If you don't have Docker set up, run these on your Raspberry Pi.
+If you don't have `docker-compose` set up, run these on your Raspberry Pi.
 ```
 $ curl -fsSL https://get.docker.com -o get-docker.sh
+$ sudo apt install -y docker-compose
 $ sudo sh get-docker.sh
 $ sudo usermod -aG docker $USER
 $ sudo systemctl start docker
@@ -47,17 +48,17 @@ $ sudo systemctl enable docker
 
 # Log out of your SSH session or reboot your Raspberry Pi to refresh your user group
 
-$ docker compose up -d
+$ docker-compose up -d
 ```
 
-And, install requirements for the clientside script on the Raspberry Pi:
+Install requirements for the clientside script on the Raspberry Pi:
 ```
 $ pip install -r client_requirements.txt
 ```
 
 At this you should be able to manually run `./inkydash.py` on the Pi to fetch data and draw it to the screen.
 
-Finally add 2 cron jobs to refresh external data every 4 minutes, and re-draw the screen every minute:
+Finally add a cron job to re-draw the screen every minute:
 ```
 $ crontab -e
 # At end of file, add:
@@ -76,4 +77,4 @@ Done:
 
 Planned:
 - Personalization options
-- Improved initial setup script
+- Improved initial setup experience

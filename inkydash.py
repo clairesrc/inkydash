@@ -1,13 +1,8 @@
 #!/usr/bin/env python3
-import sys
 import os
 from PIL import Image, ImageDraw, ImageFont
 from inky.auto import auto
 from requests import get
-from dotenv import load_dotenv
-
-if len(sys.argv) >= 2:
-    load_dotenv(sys.argv[1])
 
 IMAGE_FILENAME = "/tmp/inkydash.png"
 SCREEN_WIDTH = 600
@@ -33,7 +28,6 @@ def send_to_screen():
 
 def draw_image(state):
     """Create PNG image from dashboard state.
-    Needs refactoring to account for dynamic module order, per-module settings etc.
     """
     # create an image
     out = Image.new("RGB", (SCREEN_WIDTH, SCREEN_HEIGHT), (0, 0, 0))
