@@ -15,7 +15,7 @@ RUN pip install -r server_requirements.txt
 
 RUN mkdir /inkydash/config
 RUN mkdir /inkydash/cache
-RUN mkdir -p /root/credentials
+RUN mkdir -p /root/.credentials
 
 ADD credentials.py .
 ADD app.py .

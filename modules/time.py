@@ -5,7 +5,7 @@ from inkymodule import InkyModule
 MODULE_NAME = "time"
 DEFAULT_FORMAT = "%I:%M %p"
 REFRESH_INTERVAL = 1
-LABEL = "Time"
+LABEL = "TIME"
 SIZE = "medium"
 
 class module(InkyModule):
@@ -20,7 +20,5 @@ class module(InkyModule):
         })
     def _hydrate(self):
         time_format = self._get_config()["format"]
-        self._set_state({
-            "time": datetime.now().strftime(time_format)
-        })
+        self._set_state(datetime.now().strftime(time_format))
         return

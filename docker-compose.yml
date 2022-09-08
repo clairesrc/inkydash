@@ -10,6 +10,6 @@ services:
       - ./inkydash-config:/inkydash/config
       - ./inkydash-cache:/inkydash/cache
     environment:
-      - OPENWEATHERMAP_WEATHER_API_SECRET=
-      - TZ=
+      - OPENWEATHERMAP_WEATHER_API_SECRET=${OPENWEATHERMAP_WEATHER_API_SECRET}
+      - TZ=${TZ}
     restart: unless-stopped

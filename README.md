@@ -35,7 +35,7 @@ Copy over `./inkydash-credentials/inkydash.json` and `./inkydash-config/inkydash
 
 Next get an API secret key from [Openweathermap](https://openweathermap.org). 
 
-Adjust the values under `environment` in `docker-compose.yml` to pass down your weather API key and timezone.
+Adjust the values under `environment` in `docker-compose.yml` to pass down your weather API key and timezone, or define them in an `.env` file so they persist across git pulls.
 
 If you don't have Docker set up, run these on your Raspberry Pi.
 ```

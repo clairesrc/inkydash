@@ -11,7 +11,7 @@ from inkymodule import InkyModule
 
 MODULE_NAME = "freebusy"
 REFRESH_INTERVAL = 4
-LABEL = "Meeting Status"
+LABEL = "MEETING STATUS"
 SIZE = "large"
 
 class module(InkyModule):
@@ -67,7 +67,7 @@ class module(InkyModule):
         )
         busy = eventsResult["calendars"]["primary"]["busy"]
         if len(busy) == 0:
-            return {"status": self._get_config()["free_indicator"], "next": False}
+            return self._get_config()["free_indicator"]
 
         event = busy[0]
         event_start = (
@@ -76,6 +76,6 @@ class module(InkyModule):
         event_end = parser.parse(event["end"]).astimezone()
 
         if event_start <= now <= event_end:
-            return {"status": self._get_config()["busy_indicator"], "next": event}
+            return self._get_config()["busy_indicator"]
         else:
-            return {"status": self._get_config()["free_indicator"], "next": event}
+            return self._get_config()["free_indicator"]
