@@ -26,9 +26,9 @@ def send_to_screen():
     inky.set_image(resizedimage, saturation=saturation)
     inky.show()
 
+
 def draw_image(state):
-    """Create PNG image from dashboard state.
-    """
+    """Create PNG image from dashboard state."""
     # create an image
     out = Image.new("RGB", (SCREEN_WIDTH, SCREEN_HEIGHT), (0, 0, 0))
 
@@ -54,12 +54,16 @@ def draw_image(state):
         if widget["size"] == "small":
             height = height_small
             font = font_small
-        
+
         # label
-        d.multiline_text((10, cursor), widget["label"], font=font_small, fill=(200, 200, 200))
-        
+        d.multiline_text(
+            (10, cursor), widget["label"], font=font_small, fill=(200, 200, 200)
+        )
+
         # data
-        d.multiline_text((5, cursor + 15), widget["data"], font=font, fill=(255, 255, 255))
+        d.multiline_text(
+            (5, cursor + 15), widget["data"], font=font, fill=(255, 255, 255)
+        )
         cursor = cursor + height
 
     # save image
