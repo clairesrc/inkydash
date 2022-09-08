@@ -41,11 +41,6 @@ OPENWEATHERMAP_WEATHER_API_SECRET=
 TZ=America/Chicago
 ```
 
-Also add this line to .env, unmodified:
-```
-INKYDASH_SERVER_LOCATION=localhost:8080
-```
-
 If you don't have Docker set up, run these on your Raspberry Pi.
 ```
 $ curl -fsSL https://get.docker.com -o get-docker.sh
@@ -70,8 +65,7 @@ Finally add 2 cron jobs to refresh external data every 4 minutes, and re-draw th
 ```
 $ crontab -e
 # At end of file, add:
-*/1 * * * * /path/to/inkydash.py /path/to/.env > /tmp/inkydash-client.log
-*/4 * * * * wget http://localhost:8080/refresh -o /tmp/inkydash-server-refresh.log
+*/1 * * * * /path/to/inkydash.py > /tmp/inkydash-client.log
 ```
 
 ## Feature Roadmap
@@ -79,9 +73,11 @@ $ crontab -e
 Done:
 - Google Calendar Free/Busy
 - Weather
+- Time
 - Client/server architecture
 - Decouple screen refresh from API calls
+- Module system
 
 Planned:
-- Module system
 - Personalization options
+- Improved initial setup script

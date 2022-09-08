@@ -1,0 +1,12 @@
+# not in use yet
+modules = ["freebusy", "time", "weather"]
+
+[time]
+format = "%I:%M %p"
+
+[freebusy]
+free_indicator = "NOT IN A MEETING"
+# busy_indicator = "BUSY"
+
+[weather]
+
