@@ -65,7 +65,7 @@ def draw_image(state):
         d.multiline_text((10, cursor), widget["label"], font=font_small, fill=(200, 200, 200))
         
         # data
-        d.multiline_text((5, cursor + 10), widget["data"], font=font, fill=(255, 255, 255))
+        d.multiline_text((5, cursor + 15), widget["data"], font=font, fill=(255, 255, 255))
         cursor = cursor + height
 
     # save image
