@@ -21,7 +21,7 @@ A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way fo
 First [create a project](https://developers.google.com/workspace/guides/create-project) and [create desktop application credentials](https://developers.google.com/workspace/guides/create-credentials) through the Google console.
 Save the credentials Oauth JSON file as `./inkydash-config/inkydash.apps.googleusercontent.com.json`.
 
-CLone this repo onto both your Raspberry Pi and your PC. You will need to run a setup script from your PC and copy over its output to the Raspberry Pi.
+Clone this repo onto both your Raspberry Pi and your PC. You will need to run a setup script from your PC and copy over its output to the Raspberry Pi.
 
 Complete the Oauth flow from your PC by running:
 ```
