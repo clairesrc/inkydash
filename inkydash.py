@@ -85,7 +85,7 @@ def draw_image(state):
 
 def main():
     hostname = os.getenv("INKYDASH_SERVER_LOCATION")
-    if hostname == "none":
+    if hostname is None:
         hostname = "localhost:8080"
     draw_image(get(f"http://{hostname}/data").json())
     send_to_screen()

@@ -19,6 +19,8 @@ RUN mkdir -p /root/credentials
 
 ADD credentials.py .
 ADD app.py .
+ADD modules/* modules/
+ADD inkymodule.py .
 
 VOLUME ["/root/.credentials", "/inkydash/config", "/inkydash/cache"]
 
