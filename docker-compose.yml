@@ -9,4 +9,7 @@ services:
       - ./inkydash-credentials:/root/.credentials
       - ./inkydash-config:/inkydash/config
       - ./inkydash-cache:/inkydash/cache
+    environment:
+      - OPENWEATHERMAP_WEATHER_API_SECRET=
+      - TZ=
     restart: unless-stopped

@@ -35,11 +35,7 @@ Copy over `./inkydash-credentials/inkydash.json` and `./inkydash-config/inkydash
 
 Next get an API secret key from [Openweathermap](https://openweathermap.org). 
 
-Add a .env file to the inkydash directory on your Raspberry Pi and set the following values:
-```
-OPENWEATHERMAP_WEATHER_API_SECRET=
-TZ=America/Chicago
-```
+Adjust the values under `environment` in `docker-compose.yml` to pass down your weather API key and timezone.
 
 If you don't have Docker set up, run these on your Raspberry Pi.
 ```
