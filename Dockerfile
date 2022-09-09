@@ -1,5 +1,4 @@
 FROM python:3.10-alpine
-# FROM woahbase/alpine-rpigpio:aarch64
 
 ENV OPENWEATHERMAP_WEATHER_API_SECRET ""
 ENV TZ "America/Chicago"
@@ -9,9 +8,9 @@ RUN pip install --upgrade pip
 RUN mkdir /inkydash
 WORKDIR /inkydash
 
-ADD server_requirements.txt .
+ADD requirements.txt .
 
-RUN pip install -r server_requirements.txt
+RUN pip install -r requirements.txt
 
 RUN mkdir /inkydash/config
 RUN mkdir /inkydash/cache

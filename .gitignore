@@ -3,5 +3,5 @@ __cache__
 __pycache__
 .cache
 .pytest_cache
-inkydash-config/inkydash.apps.googleusercontent.com.json
-inkydash-credentials/inkydash.json
+config/inkydash.apps.googleusercontent.com.json
+credentials/inkydash.json

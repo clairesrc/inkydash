@@ -6,10 +6,19 @@ services:
     ports:
       - 8080:5000
     volumes: 
-      - ./inkydash-credentials:/root/.credentials
-      - ./inkydash-config:/inkydash/config
-      - ./inkydash-cache:/inkydash/cache
+      - ./credentials:/root/.credentials
+      - ./config:/inkydash/config
     environment:
       - OPENWEATHERMAP_WEATHER_API_SECRET=${OPENWEATHERMAP_WEATHER_API_SECRET}
       - TZ=${TZ}
     restart: unless-stopped
+  inkydash-frontend:
+    image: clairesrc/inkydash-frontend
+    container_name: inkydash-frontend
+    restart: unless-stopped
+    privileged: true
+    devices:
+      - /dev/gpiomem:/dev/gpiomem
+      - /dev/ttyAMA0:/dev/ttyAMA0
+    cap_add:
+      - SYS_RAWIO
