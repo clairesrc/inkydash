@@ -3,8 +3,8 @@ from oauth2client import client, tools, file
 import argparse
 import os
 
-INKYDASH_CREDENTIALS_DIR = "./inkydash-credentials"
-INKYDASH_CONFIG_DIR = "./inkydash-config"
+INKYDASH_CREDENTIALS_DIR = "./credentials"
+INKYDASH_CONFIG_DIR = "./config"
 INKYDASH_GOOGLE_CREDENTIALS_FILE = "/inkydash.json"
 # oauth2 json credentials from google console
 CLIENT_SECRET_FILE = "/inkydash.apps.googleusercontent.com.json"
