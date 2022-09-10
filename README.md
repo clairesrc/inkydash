@@ -4,6 +4,8 @@ A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way fo
 
 InkyDash should start when the Raspberry Pi boots. You can alter the contents of `config/inkydash.toml` to personalize your dashboard, disable or reorder widgets, etc.
 
+This repository contains the backend API code and everything an end-user needs to set up InkyDash on their Pi. For the Inky HAT frontend's source code, see [clairesrc/inkydash-frontend](https://github.com/clairesrc/inkydash-frontend).
+
 ## Preview
 
 ![image0](https://user-images.githubusercontent.com/22794371/189393215-f9f5f492-9d88-431c-9473-89ad479f4bf0.jpeg)
