@@ -22,6 +22,7 @@ ADD credentials.py .
 ADD app.py .
 ADD modules/* modules/
 ADD inkymodule.py .
+ADD inkydash.py .
 
 VOLUME ["/root/.credentials", "/inkydash/config", "/inkydash/cache"]
 

@@ -1,3 +1,4 @@
+[![ci](https://github.com/clairesrc/inkydash/actions/workflows/build.yml/badge.svg)](https://github.com/clairesrc/inkydash/actions/workflows/build.yml)
 # InkyDash
 A WFH-oriented eInk dashboard for your Raspberry Pi. I wanted a low-power way for my wife to quickly check if I'm currently in a meeting, so I hacked this together.
 
@@ -71,8 +72,9 @@ Add your module file to `modules/` and it will be auto-loaded at startup. Rememb
 
 All modules should define `MODULE_NAME`, `REFRESH_INTERVAL`, `LABEL`, `SIZE` and `PARAMS` at the top level of the file, and the module class should be named `module` so that it can be properly imported.
 
-| **MODULE_NAME**      | Module filename e.g. `freebusy`                                                       |
+| Variable name        | Variable description                                                                  |
 |----------------------|---------------------------------------------------------------------------------------|
+| **MODULE_NAME**      | Module filename e.g. `freebusy`                                                       |
 | **REFRESH_INTERVAL** | Module state update frequency in minutes                                              |
 | **LABEL**            | Module widget label for display on frontend e.g. `MEETING STATUS`                     |
 | **SIZE**             | Module font size for display on frontend e.g. `large`, `medium`, `small`              |
@@ -80,6 +82,14 @@ All modules should define `MODULE_NAME`, `REFRESH_INTERVAL`, `LABEL`, `SIZE` and
 
 Module "Hello world" boilerplate:
 ```python
+from inkymodule import InkyModule
+
+MODULE_NAME = "hello"
+REFRESH_INTERVAL = 1
+LABEL = "HELLO WORLD"
+SIZE = "large"
+PARAMS = []
+
 class module(InkyModule):
     def __init__(self, config={}):
         super().__init__(
@@ -98,7 +108,11 @@ class module(InkyModule):
         return
 ```
 
+Any initial setup can be added to the end of `__init__()` after calling the superclass. This method gets run once, when InkyDash first starts up.
+
 `_hydrate()` is run at the interval set in `REFRESH_INTERVAL`. When the module is rendered in between intervals, data passed into `_set_state()` is loaded from memory.
+
+Module parameters (the `PARAMS` list) are for passing down individual environment variables to the module. Use `self._get_params()["PARAM_NAME"]` to access the value in your module code. 
 
 ## Feature roadmap
 Planned:
