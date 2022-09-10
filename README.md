@@ -120,3 +120,5 @@ Module parameters (the `PARAMS` list) are for passing down individual environmen
 Planned:
 - More customization options
 - Expanded module options with multi-column widgets
+- Non-blocking external API updates
+- Faster frontend Docker image builds
