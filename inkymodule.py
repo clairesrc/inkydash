@@ -27,7 +27,7 @@ class InkyModule:
             <= datetime.now()
         )
 
-    def _set_state(self, state):
+    def __set_state(self, state):
         self.__state = state
         self.__last_updated = datetime.now()
         return
@@ -45,7 +45,7 @@ class InkyModule:
     def render(self):
         """Builds object ready for clientside with current snapshot of state"""
         if self.__is_stale():
-            self._hydrate()
+            self.__set_state(self._hydrate())
         result = dict()
         result.update({"data": self.__state})
         result.update(self.__module)

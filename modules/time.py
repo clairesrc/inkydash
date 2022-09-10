@@ -27,5 +27,4 @@ class module(InkyModule):
 
     def _hydrate(self):
         time_format = self._get_config()["format"]
-        self._set_state(datetime.now().strftime(time_format))
-        return
+        return datetime.now().strftime(time_format)

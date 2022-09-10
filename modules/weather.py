@@ -33,8 +33,7 @@ class module(InkyModule):
         self.__lon = geo["lon"]
 
     def _hydrate(self):
-        self._set_state(self.__get_weather())
-        return
+        return self.__get_weather()
 
     def __get_weather(self):
         """Queries OpenWeatherMap for weather"""

@@ -44,8 +44,7 @@ class module(InkyModule):
         )
 
     def _hydrate(self):
-        self._set_state(self.__get_freebusy())
-        return
+        return self.__get_freebusy()
 
     def __get_freebusy(self):
         """Creates a Google Calendar API service object and outputs free/busy status"""

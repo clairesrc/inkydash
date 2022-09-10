@@ -106,13 +106,12 @@ class module(InkyModule):
         )
 
     def _hydrate(self):
-        self._set_state("Hello, World!")
-        return
+        return "Hello, world!"
 ```
 
 Any initial setup can be added to the end of `__init__()` after calling the superclass. This method gets run once, when InkyDash first starts up.
 
-`_hydrate()` is run at the interval set in `REFRESH_INTERVAL`. When the module is rendered in between intervals, data passed into `_set_state()` is loaded from memory.
+`_hydrate()` is run at the interval set in `REFRESH_INTERVAL` to set the data that will be passed down to the frontend. When the module is rendered in between intervals, the previous value is loaded from memory. The data type returned must be a number or a string. 
 
 Module parameters (the `PARAMS` list) are for passing down individual environment variables to the module. Use `self._get_params()["PARAM_NAME"]` to access the value in your module code. 
 
