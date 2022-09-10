@@ -2,6 +2,8 @@ FROM python:3.10-alpine
 
 ENV OPENWEATHERMAP_WEATHER_API_SECRET ""
 ENV TZ "America/Chicago"
+ENV GOOGLE_TOKEN_FILENAME "/root/.credentials/inkydash.json"
+ENV GOOGLE_CLIENT_SECRET_FILENAME "/inkydash/config/inkydash.apps.googleusercontent.com.json"
 
 RUN pip install --upgrade pip
 

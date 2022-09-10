@@ -1,9 +1,12 @@
 from datetime import datetime, timedelta
 
+from inkydash import InkyDash
+
 
 class InkyModule:
     def __init__(self, config={}, module={}):
         self.__config = config
+        self.__params = {}
         self.__module = {
             "name": module["name"],
             "refreshInterval": module["refreshInterval"],
@@ -12,6 +15,11 @@ class InkyModule:
         }
         self.__state = {}
         self.__last_updated = datetime.combine(datetime.now(), datetime.min.time())
+        if "params" in module:
+            app_params = InkyDash().get_params()
+            for param in module["params"]:
+                self.__params[param] = app_params[param]
+
 
     def __is_stale(self):
         return (
@@ -26,6 +34,9 @@ class InkyModule:
 
     def _get_config(self):
         return self.__config
+
+    def _get_params(self):
+        return self.__params
 
     def _hydrate(self):
         """Updates state"""

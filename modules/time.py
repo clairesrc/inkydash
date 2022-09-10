@@ -7,6 +7,7 @@ DEFAULT_FORMAT = "%I:%M %p"
 REFRESH_INTERVAL = 1
 LABEL = "TIME"
 SIZE = "medium"
+PARAMS = []
 
 
 class module(InkyModule):
@@ -20,6 +21,7 @@ class module(InkyModule):
                 "refreshInterval": REFRESH_INTERVAL,
                 "label": LABEL,
                 "size": SIZE,
+                "params": PARAMS
             },
         )
 

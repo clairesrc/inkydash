@@ -1,35 +1,21 @@
 #!/usr/bin/env python3
-import toml
+import os
 from flask import Flask
 from dotenv import load_dotenv
 
-from modules import freebusy, time, weather
+from inkydash import InkyDash
 
 load_dotenv()
-
-module_classes = {"freebusy": freebusy, "time": time, "weather": weather}
-
-modules = []
-
+id = InkyDash()
 app = Flask(__name__)
 
 
 @app.before_first_request
-def setup_modules():
-    # read config
-    config = {}
-    with open("/inkydash/config/inkydash.toml", "r") as file:
-        data = file.read()
-        config = toml.loads(data)
-
-    # load modules
-    for module in config["modules"]:
-        imported_module = module_classes[module]
-        module_config = config[module] if module in config.keys() else {}
-        modules.append(imported_module.module(module_config))
-        app.logger.info("loaded module %s", module)
+def setup_app():
+    id.setup(InkyDash.get_config("/inkydash/config/inkydash.toml"), os.environ)
 
 
 @app.route("/data")
 def get_data():
-    return list(map(lambda module_instance: module_instance.render(), modules))
+    return id.render()
+

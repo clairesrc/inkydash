@@ -8,12 +8,11 @@ MODULE_NAME = "weather"
 REFRESH_INTERVAL = 15
 LABEL = "WEATHER"
 SIZE = "medium"
+PARAMS = ["OPENWEATHERMAP_WEATHER_API_SECRET"]
 
 
 class module(InkyModule):
     def __init__(self, config={}):
-        if "weather_api_key" not in config.keys():
-            config["weather_api_key"] = os.getenv("OPENWEATHERMAP_WEATHER_API_SECRET")
         if "units" not in config.keys():
             config["units"] = "imperial"
         super().__init__(
@@ -23,6 +22,7 @@ class module(InkyModule):
                 "refreshInterval": REFRESH_INTERVAL,
                 "label": LABEL,
                 "size": SIZE,
+                "params": PARAMS
             },
         )
 
@@ -38,7 +38,7 @@ class module(InkyModule):
 
     def __get_weather(self):
         """Queries OpenWeatherMap for weather"""
-        key = self._get_config()["weather_api_key"]
+        key = self._get_params()["OPENWEATHERMAP_WEATHER_API_SECRET"]
         unit_config = self._get_config()["units"]
         data = get(
             f"https://api.openweathermap.org/data/2.5/weather?lat={self.__lat}&lon={self.__lon}&units={unit_config}&appid={key}"

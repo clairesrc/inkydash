@@ -66,15 +66,41 @@ $ docker-compose up -d
 ```
 
 
-## Feature Roadmap
+## Writing modules
+Add your module file to `modules/` and it will be auto-loaded at startup. Remember to also add it to the `modules` array in `config/inkydash.toml`.
 
-Done:
-- Google Calendar Free/Busy
-- Weather
-- Time
-- Client/server architecture
-- Decouple screen refresh from API calls
-- Module system
+All modules should define `MODULE_NAME`, `REFRESH_INTERVAL`, `LABEL`, `SIZE` and `PARAMS` at the top level of the file, and the module class should be named `module` so that it can be properly imported.
 
+| **MODULE_NAME**      | Module filename e.g. `freebusy`                                                       |
+|----------------------|---------------------------------------------------------------------------------------|
+| **REFRESH_INTERVAL** | Module state update frequency in minutes                                              |
+| **LABEL**            | Module widget label for display on frontend e.g. `MEETING STATUS`                     |
+| **SIZE**             | Module font size for display on frontend e.g. `large`, `medium`, `small`              |
+| **PARAMS**           | List of environment variables to pass down to module e.g. `["GOOGLE_TOKEN_FILENAME"]` |
+
+Module "Hello world" boilerplate:
+```python
+class module(InkyModule):
+    def __init__(self, config={}):
+        super().__init__(
+            config,
+            {
+                "name": MODULE_NAME, 
+                "refreshInterval": REFRESH_INTERVAL,
+                "label": LABEL,
+                "size": SIZE,
+                "params": PARAMS
+            },
+        )
+
+    def _hydrate(self):
+        self._set_state("Hello, World!")
+        return
+```
+
+`_hydrate()` is run at the interval set in `REFRESH_INTERVAL`. When the module is rendered in between intervals, data passed into `_set_state()` is loaded from memory.
+
+## Feature roadmap
 Planned:
-- Personalization options
+- More customization options
+- Expanded module options with multi-column widgets

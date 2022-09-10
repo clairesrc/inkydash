@@ -13,16 +13,11 @@ MODULE_NAME = "freebusy"
 REFRESH_INTERVAL = 4
 LABEL = "MEETING STATUS"
 SIZE = "large"
+PARAMS = ["GOOGLE_TOKEN_FILENAME", "GOOGLE_CLIENT_SECRET_FILENAME"]
 
 
 class module(InkyModule):
     def __init__(self, config={}):
-        if "credentials_file" not in config.keys():
-            config["credentials_file"] = (
-                "/root/.credentials" + credentials.INKYDASH_GOOGLE_CREDENTIALS_FILE
-            )
-        if "secret_file" not in config.keys():
-            config["secret_file"] = "/inkydash/config" + credentials.CLIENT_SECRET_FILE
         if "free_indicator" not in config.keys():
             config["free_indicator"] = "FREE"
         if "busy_indicator" not in config.keys():
@@ -38,13 +33,14 @@ class module(InkyModule):
                 "refreshInterval": REFRESH_INTERVAL,
                 "label": LABEL,
                 "size": SIZE,
+                "params": PARAMS
             },
         )
 
         # setup
         self.__creds = credentials.get_google_credentials(
-            credentials_file=self._get_config()["credentials_file"],
-            credentials_secret=self._get_config()["secret_file"],
+            credentials_file=self._get_params()["GOOGLE_TOKEN_FILENAME"],
+            credentials_secret=self._get_params()["GOOGLE_CLIENT_SECRET_FILENAME"],
         )
 
     def _hydrate(self):
@@ -56,6 +52,7 @@ class module(InkyModule):
         http = self.__creds.authorize(httplib2.Http())
         service = discovery.build("calendar", "v3", http=http)
         now = datetime.datetime.now().astimezone()
+        config = self._get_config()
 
         eventsResult = (
             service.freebusy()
@@ -71,7 +68,7 @@ class module(InkyModule):
                     )
                     .astimezone()
                     .isoformat(),
-                    "timeZone": self._get_config()["timezone"],
+                    "timeZone": config["timezone"],
                     "items": [{"id": "primary"}],
                 }
             )
@@ -79,16 +76,16 @@ class module(InkyModule):
         )
         busy = eventsResult["calendars"]["primary"]["busy"]
         if len(busy) == 0:
-            return self._get_config()["free_indicator"]
+            return config["free_indicator"]
 
         event = busy[0]
         event_start = (
             parser.parse(event["start"])
-            - timedelta(minutes=self._get_config()["meeting_buffer"])
+            - timedelta(minutes=config["meeting_buffer"])
         ).astimezone()
         event_end = parser.parse(event["end"]).astimezone()
 
         if event_start <= now <= event_end:
-            return self._get_config()["busy_indicator"]
+            return config["busy_indicator"]
         else:
-            return self._get_config()["free_indicator"]
+            return config["free_indicator"]
