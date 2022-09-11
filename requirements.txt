@@ -6,4 +6,5 @@ pytest-dotenv
 pytest
 python-dateutil
 flask
+flask-cors
 toml

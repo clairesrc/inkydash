@@ -2,7 +2,7 @@
 import os
 from flask import Flask
 from dotenv import load_dotenv
-
+from flask_cors import cross_origin
 from inkydash import InkyDash
 
 load_dotenv()
@@ -16,6 +16,6 @@ def setup_app():
 
 
 @app.route("/data")
+@cross_origin()
 def get_data():
     return id.render()
-
