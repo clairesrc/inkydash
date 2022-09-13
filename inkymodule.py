@@ -4,22 +4,33 @@ from inkydash import InkyDash
 
 
 class InkyModule:
-    def __init__(self, config={}, module={}):
-        self.__config = config
+    def __init__(self, module, config, default_config={}):
         self.__params = {}
-        self.__module = {
-            "name": module["name"],
-            "refreshInterval": module["refreshInterval"],
-            "label": module["label"],
-            "size": module["size"],
-        }
         self.__state = {}
-        self.__last_updated = datetime.combine(datetime.now(), datetime.min.time())
+
+        # set module metadata
+        self.__module = module
+
+        # pass down parameters to module
         if "params" in module:
             app_params = InkyDash().get_params()
             for param in module["params"]:
                 self.__params[param] = app_params[param]
 
+        # fallback to default config fir value is not set
+        for key in default_config.keys():
+            if key not in config:
+                config[key] = default_config[key]
+        self.__config = config
+
+        # set last updated to yesterday so it fetches data on first render
+        self.__last_updated = datetime.combine(
+            datetime.now(), datetime.min.time()
+        ) - timedelta(hours=24)
+
+        # run initial setup function
+        self._setup()
+        return
 
     def __is_stale(self):
         return (
@@ -42,6 +53,10 @@ class InkyModule:
         """Updates state"""
         return
 
+    def _setup(self):
+        """Runs once on app init"""
+        return
+
     def render(self):
         """Builds object ready for clientside with current snapshot of state"""
         if self.__is_stale():
@@ -49,4 +64,5 @@ class InkyModule:
         result = dict()
         result.update({"data": self.__state})
         result.update(self.__module)
+        del result["params"]
         return result

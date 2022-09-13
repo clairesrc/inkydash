@@ -1,6 +1,7 @@
-import oauth2client
-from oauth2client import client, tools, file
-import argparse
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+
 import os
 
 INKYDASH_CREDENTIALS_DIR = "./credentials"
@@ -9,12 +10,12 @@ INKYDASH_GOOGLE_CREDENTIALS_FILE = "/inkydash.json"
 # oauth2 json credentials from google console
 CLIENT_SECRET_FILE = "/inkydash.apps.googleusercontent.com.json"
 APPLICATION_NAME = "InkyDash"
-SCOPES = "https://www.googleapis.com/auth/calendar"
+SCOPES = ["https://www.googleapis.com/auth/calendar"]
 
 
 def get_google_credentials(
-    credentials_file=INKYDASH_CREDENTIALS_DIR + INKYDASH_GOOGLE_CREDENTIALS_FILE,
-    credentials_secret=INKYDASH_CONFIG_DIR + CLIENT_SECRET_FILE,
+    token_file=INKYDASH_CREDENTIALS_DIR + INKYDASH_GOOGLE_CREDENTIALS_FILE,
+    client_secrets_file=INKYDASH_CONFIG_DIR + CLIENT_SECRET_FILE,
 ):
     """Gets valid user credentials from storage.
     If nothing has been stored, or if the stored credentials are invalid,
@@ -23,15 +24,20 @@ def get_google_credentials(
         Credentials, the obtained credential.
     """
     # check for existing credentials
-    credential_path = os.path.join(credentials_file)
+    credentials = None
+    if os.path.exists(token_file):
+        credentials = Credentials.from_authorized_user_file(token_file, SCOPES)
+    # If there are no (valid) credentials available, let the user log in.
+    if not credentials or not credentials.valid:
+        if credentials and credentials.expired and credentials.refresh_token:
+            credentials.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                client_secrets_file, SCOPES
+            )
+            credentials = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open(token_file, "w") as token:
+            token.write(credentials.to_json())
 
-    store = oauth2client.file.Storage(credential_path)
-    credentials = store.get()
-    if not credentials or credentials.invalid:
-        # fetch credentials through oauth flow
-        flow = client.flow_from_clientsecrets(credentials_secret, SCOPES)
-        flow.user_agent = APPLICATION_NAME
-        flags = argparse.ArgumentParser(parents=[tools.argparser]).parse_args()
-        credentials = tools.run_flow(flow, store, flags)
-        # print('Storing credentials to ' + credential_path)
     return credentials

@@ -93,27 +93,17 @@ SIZE = "large"
 PARAMS = []
 
 class module(InkyModule):
-    def __init__(self, config={}):
-        super().__init__(
-            config,
-            {
-                "name": MODULE_NAME, 
-                "refreshInterval": REFRESH_INTERVAL,
-                "label": LABEL,
-                "size": SIZE,
-                "params": PARAMS
-            },
-        )
-
     def _hydrate(self):
         return "Hello, world!"
 ```
 
-Any initial setup can be added to the end of `__init__()` after calling the superclass. This method gets run once, when InkyDash first starts up.
+Any initial setup can be added to the end of `__init__()` after calling `self._setup()`. This method gets run once, when InkyDash first starts up.
 
 `_hydrate()` is run at the interval set in `REFRESH_INTERVAL` to set the data that will be passed down to the frontend. When the module is rendered in between intervals, the previous value is loaded from memory. The data type returned must be a number or a string. 
 
 Module parameters (the `PARAMS` list) are for passing down individual environment variables to the module. Use `self._get_params()["PARAM_NAME"]` to access the value in your module code. 
+
+You can specify a `_setup()` method that will be run once, on app initialization. Also, an optional `DEFAULT_CONFIG` dictionary can specify default config values in the form `{"key": "default_value"}`, to render them optional in the `inkydash.toml` config file.
 
 ## Feature roadmap
 Planned:

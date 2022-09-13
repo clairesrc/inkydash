@@ -3,29 +3,18 @@ from requests import get
 import os
 
 from inkymodule import InkyModule
+from modules.freebusy import DEFAULT_CONFIG
 
 MODULE_NAME = "weather"
 REFRESH_INTERVAL = 15
 LABEL = "WEATHER"
 SIZE = "medium"
+DEFAULT_CONFIG = {"units": "imperial"}
 PARAMS = ["OPENWEATHERMAP_WEATHER_API_SECRET"]
 
 
 class module(InkyModule):
-    def __init__(self, config={}):
-        if "units" not in config.keys():
-            config["units"] = "imperial"
-        super().__init__(
-            config,
-            {
-                "name": MODULE_NAME,
-                "refreshInterval": REFRESH_INTERVAL,
-                "label": LABEL,
-                "size": SIZE,
-                "params": PARAMS
-            },
-        )
-
+    def _setup(self):
         # setup
         ip = module.__get_ip()
         geo = module.__get_geo(ip)

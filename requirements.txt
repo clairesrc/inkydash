@@ -1,5 +1,6 @@
 google-api-python-client
-oauth2client
+google-auth-httplib2
+google-auth-oauthlib
 pytz
 python-dotenv
 pytest-dotenv
