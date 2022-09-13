@@ -7,15 +7,12 @@ load_dotenv()
 
 
 def test_time():
-    id = InkyDash()
-    id.setup({"modules": ["time"]}, {})
+    id = InkyDash({"modules": ["time"]}, {})
     assert len(id.render()[0]["data"]) > 0
-    del InkyDash.instance
 
 
 def test_freebusy():
-    id = InkyDash()
-    id.setup(
+    id = InkyDash(
         {"modules": ["freebusy"]},
         {
             "GOOGLE_TOKEN_FILENAME": "credentials/inkydash.json",
@@ -23,23 +20,19 @@ def test_freebusy():
         },
     )
     assert len(id.render()[0]["data"]) > 0
-    del InkyDash.instance
 
 
 def test_freebusy_no_params():
     errored = False
-    id = InkyDash()
     try:
-        id.setup({"modules": ["freebusy"]}, {})
+        id = InkyDash({"modules": ["freebusy"]}, {})
     except Exception:
         errored = True
     assert errored
-    del InkyDash.instance
 
 
 def test_weather():
-    id = InkyDash()
-    id.setup(
+    id = InkyDash(
         {"modules": ["weather"]},
         {
             "OPENWEATHERMAP_WEATHER_API_SECRET": os.getenv(
@@ -48,23 +41,19 @@ def test_weather():
         },
     )
     assert len(id.render()[0]["data"]) > 0
-    del InkyDash.instance
 
 
 def test_weather_no_params():
     errored = False
-    id = InkyDash()
     try:
-        id.setup({"modules": ["weather"]}, {})
+        id = InkyDash({"modules": ["weather"]}, {})
     except Exception:
         errored = True
     assert errored
-    del InkyDash.instance
 
 
 def test_all():
-    id = InkyDash()
-    id.setup(
+    id = InkyDash(
         {"modules": ["freebusy", "weather", "time"]},
         {
             "GOOGLE_TOKEN_FILENAME": "credentials/inkydash.json",
@@ -76,16 +65,13 @@ def test_all():
     )
     results = id.render()
     assert results[2]["name"] == "time"
-    del InkyDash.instance
 
 
 def test_weather_bad_params():
     errored = False
-    id = InkyDash()
-    id.setup({"modules": ["weather"]}, {"OPENWEATHERMAP_WEATHER_API_SECRET": "a"})
+    id = InkyDash({"modules": ["weather"]}, {"OPENWEATHERMAP_WEATHER_API_SECRET": "a"})
     try:
         id.render()
     except Exception:
         errored = True
     assert errored
-    del InkyDash.instance

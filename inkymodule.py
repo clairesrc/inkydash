@@ -4,7 +4,7 @@ from inkydash import InkyDash
 
 
 class InkyModule:
-    def __init__(self, module, config, default_config={}):
+    def __init__(self, params, module, config, default_config={}):
         self.__params = {}
         self.__state = {}
 
@@ -13,9 +13,8 @@ class InkyModule:
 
         # pass down parameters to module
         if "params" in module:
-            app_params = InkyDash().get_params()
             for param in module["params"]:
-                self.__params[param] = app_params[param]
+                self.__params[param] = params[param]
 
         # fallback to default config if value is not set
         for key in default_config.keys():

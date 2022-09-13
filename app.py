@@ -6,13 +6,12 @@ from flask_cors import cross_origin
 from inkydash import InkyDash
 
 load_dotenv()
-id = InkyDash()
+id = InkyDash(InkyDash.get_config("/inkydash/config/inkydash.toml"), os.environ)
 app = Flask(__name__)
 
 
-@app.before_first_request
-def setup_app():
-    id.setup(InkyDash.get_config("/inkydash/config/inkydash.toml"), os.environ)
+# @app.before_first_request
+# def setup_app():
 
 
 @app.route("/data")
