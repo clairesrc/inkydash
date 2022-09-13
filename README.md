@@ -90,20 +90,19 @@ MODULE_NAME = "hello"
 REFRESH_INTERVAL = 1
 LABEL = "HELLO WORLD"
 SIZE = "large"
-PARAMS = []
 
 class module(InkyModule):
     def _hydrate(self):
         return "Hello, world!"
 ```
 
-Any initial setup can be added to the end of `__init__()` after calling `self._setup()`. This method gets run once, when InkyDash first starts up.
+`_hydrate()` is run once at startup, then run at the interval set in `REFRESH_INTERVAL` to set the data that will be passed down to the frontend. When the module is rendered in between intervals, the previous value is loaded from memory. The data type returned must be a number or a string.
 
-`_hydrate()` is run at the interval set in `REFRESH_INTERVAL` to set the data that will be passed down to the frontend. When the module is rendered in between intervals, the previous value is loaded from memory. The data type returned must be a number or a string. 
+You can add module parameters (specified as a list, e.g. `PARAMS=["ENV_VARIABLE_NAME"]`) for passing down individual environment variables to the module. Use `self._get_params()["ENV_VARIABLE_NAME"]` to access the value in your module code. 
 
-Module parameters (the `PARAMS` list) are for passing down individual environment variables to the module. Use `self._get_params()["PARAM_NAME"]` to access the value in your module code. 
+You can specify a `_setup()` method that will be run once, before the first render, on app initialization. This method has full access to module config and parameters.
 
-You can specify a `_setup()` method that will be run once, on app initialization. Also, an optional `DEFAULT_CONFIG` dictionary can specify default config values in the form `{"key": "default_value"}`, to render them optional in the `inkydash.toml` config file.
+Modules can accept `config` values that are set in `inkydash.toml`. You can then use `self._get_config()["key"]` to access the value in your module code. You can set the `DEFAULT_CONFIG` dictionary to specify default config values in the form `{"key": "default_value"}`, which renders them optiona.
 
 ## Feature roadmap
 Planned:
