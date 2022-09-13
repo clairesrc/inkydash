@@ -28,12 +28,12 @@ class InkyDash:
         modules = __import__("modules", fromlist=config["modules"])
         for i, module in enumerate(config["modules"]):
             imported_module = getattr(modules, module)
-            module_config = config[module] if module in config.keys() else {}
-            module_default_config = (
-                imported_module.DEFAULT_CONFIG
-                if "DEFAULT_CONFIG" in dir(imported_module)
-                else {}
-            )
+            module_config = {}
+            if module in config.keys():
+                module_config = config[module]
+            module_default_config = {}
+            if "DEFAULT_CONFIG" in dir(imported_module):
+                module_default_config = imported_module.DEFAULT_CONFIG
             module_instance = imported_module.module(
                 {
                     "name": imported_module.MODULE_NAME,
