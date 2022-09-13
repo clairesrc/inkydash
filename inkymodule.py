@@ -17,13 +17,13 @@ class InkyModule:
             for param in module["params"]:
                 self.__params[param] = app_params[param]
 
-        # fallback to default config fir value is not set
+        # fallback to default config if value is not set
         for key in default_config.keys():
             if key not in config:
                 config[key] = default_config[key]
         self.__config = config
 
-        # set last updated to yesterday so it fetches data on first render
+        # set last updated to yesterday so data is fetched on first render
         self.__last_updated = datetime.combine(
             datetime.now(), datetime.min.time()
         ) - timedelta(hours=24)
