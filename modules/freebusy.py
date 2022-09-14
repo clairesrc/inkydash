@@ -11,7 +11,10 @@ from inkymodule import InkyModule
 MODULE_NAME = "freebusy"
 REFRESH_INTERVAL = 4
 LABEL = "MEETING STATUS"
-SIZE = "large"
+WIDGETS = [
+    {"name": "freebusy", "size": "large"},
+    {"name": "next", "size": "small"},
+]
 DEFAULT_CONFIG = {
     "free_indicator": "FREE",
     "busy_indicator": "BUSY",
@@ -36,6 +39,8 @@ class module(InkyModule):
         service = discovery.build("calendar", "v3", credentials=self.__creds)
         now = datetime.datetime.now().astimezone()
         config = self._get_config()
+        freebusy = config["free_indicator"]
+        next = "No more meetings today"
 
         eventsResult = (
             service.freebusy()
@@ -58,16 +63,23 @@ class module(InkyModule):
             .execute()
         )
         busy = eventsResult["calendars"]["primary"]["busy"]
-        if len(busy) == 0:
-            return config["free_indicator"]
+        if len(busy) > 0:
+            event = busy[0]
+            event_start = (
+                parser.parse(event["start"])
+                - timedelta(minutes=config["meeting_buffer"])
+            ).astimezone()
+            event_end = parser.parse(event["end"]).astimezone()
 
-        event = busy[0]
-        event_start = (
-            parser.parse(event["start"]) - timedelta(minutes=config["meeting_buffer"])
-        ).astimezone()
-        event_end = parser.parse(event["end"]).astimezone()
+            if event_start <= now <= event_end:
+                freebusy = config["busy_indicator"]
 
-        if event_start <= now <= event_end:
-            return config["busy_indicator"]
-        else:
-            return config["free_indicator"]
+        if len(busy) > 1:
+            next = (
+                "Next meeting: "
+                + parser.parse(busy[1]["start"]).strftime()
+                + "-"
+                + parser.parse(busy[1]["stop"]).strftime()
+            )
+
+        return {"freebusy": freebusy, "next": next}
