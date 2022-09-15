@@ -122,4 +122,3 @@ def _hydrate(self):
 Planned:
 - More customization options
 - Non-blocking external API updates
-- Faster frontend Docker image builds
