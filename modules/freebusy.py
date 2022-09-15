@@ -79,7 +79,7 @@ class module(InkyModule):
                 "Next meeting: "
                 + parser.parse(busy[1]["start"]).strftime("%-I:%M %p")
                 + "-"
-                + parser.parse(busy[1]["stop"]).strftime("%-I:%M %p")
+                + parser.parse(busy[1]["end"]).strftime("%-I:%M %p")
             )
 
         return {"freebusy": freebusy, "next": next}
