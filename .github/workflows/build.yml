@@ -7,7 +7,7 @@ concurrency:
 on:
   push:
     branches:
-      - "mulicolumn"
+      - "main"
 
 jobs:
   docker:
@@ -30,4 +30,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: clairesrc/inkydash:mulicolumn
+          tags: clairesrc/inkydash:main
