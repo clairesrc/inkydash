@@ -1,13 +1,13 @@
 name: ci
 
-concurrency: 
+concurrency:
   group: ${{ github.ref }}
   cancel-in-progress: true
 
 on:
   push:
     branches:
-      - "main"
+      - "mulicolumn"
 
 jobs:
   docker:
@@ -30,4 +30,4 @@ jobs:
           context: .
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: clairesrc/inkydash:latest
+          tags: clairesrc/inkydash:mulicolumn

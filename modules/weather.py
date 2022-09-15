@@ -8,7 +8,10 @@ from modules.freebusy import DEFAULT_CONFIG
 MODULE_NAME = "weather"
 REFRESH_INTERVAL = 15
 LABEL = "WEATHER"
-SIZE = "medium"
+WIDGETS = [
+    {"name": "temperature", "size": "large"},
+    {"name": "weather", "size": "medium"},
+]
 DEFAULT_CONFIG = {"units": "imperial"}
 PARAMS = ["OPENWEATHERMAP_WEATHER_API_SECRET"]
 
@@ -36,7 +39,10 @@ class module(InkyModule):
         unit = "F"
         if unit_config == "metric":
             unit = "C"
-        return f"{weather_feels_like_temp}°{unit} | {weather_status}"
+        return {
+            "temperature": f"{weather_feels_like_temp}°{unit}",
+            "weather": weather_status,
+        }
 
     def __get_geo(ip):
         """Queries for IP geolocation"""

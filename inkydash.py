@@ -9,21 +9,27 @@ class InkyDash:
         modules = __import__("modules", fromlist=config["modules"])
         for i, module in enumerate(config["modules"]):
             imported_module = getattr(modules, module)
+            imported_module_keys = dir(imported_module)
             module_config = {}
             if module in config.keys():
                 module_config = config[module]
             module_default_config = {}
-            if "DEFAULT_CONFIG" in dir(imported_module):
+            module_metadata = {
+                "name": imported_module.MODULE_NAME,
+                "refreshInterval": imported_module.REFRESH_INTERVAL,
+                "label": imported_module.LABEL,
+                "params": imported_module.PARAMS,
+            }
+            if "SIZE" in imported_module_keys:
+                module_metadata["size"] = imported_module.SIZE
+            elif "WIDGETS" in imported_module_keys:
+                module_metadata["widgets"] = imported_module.WIDGETS
+
+            if "DEFAULT_CONFIG" in imported_module_keys:
                 module_default_config = imported_module.DEFAULT_CONFIG
             module_instance = imported_module.module(
                 params,
-                {
-                    "name": imported_module.MODULE_NAME,
-                    "refreshInterval": imported_module.REFRESH_INTERVAL,
-                    "label": imported_module.LABEL,
-                    "size": imported_module.SIZE,
-                    "params": imported_module.PARAMS,
-                },
+                module_metadata,
                 module_config,
                 module_default_config,
             )

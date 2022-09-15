@@ -1,0 +1,14 @@
+version: "3"
+services:
+  inkydash:
+    image: inkydash
+    container_name: inkydash
+    ports:
+      - 8080:5000
+    volumes: 
+      - ./credentials:/root/.credentials
+      - ./config:/inkydash/config
+    environment:
+      - OPENWEATHERMAP_WEATHER_API_SECRET=${OPENWEATHERMAP_WEATHER_API_SECRET}
+      - TZ=${TZ}
+    restart: unless-stopped

@@ -104,9 +104,22 @@ You can specify a `_setup()` method that will be run once, before the first rend
 
 Modules can accept `config` values that are set in `inkydash.toml`. You can then use `self._get_config()["key"]` to access the value in your module code. You can set the `DEFAULT_CONFIG` dictionary to specify default config values in the form `{"key": "default_value"}`, which renders them optiona.
 
+To specify multiple columns for a single widget, remove the `SIZE` variable, and set the `WIDGETS` variable. Each item should set a `size` and `name` property:
+```python
+WIDGETS = [
+    {"name": "widget1", "size": "large"},
+    {"name": "widget2", "size": "medium"},
+]
+```
+
+Then adjust your `_hydrate()` function to map return values to their widgets:
+```python
+def _hydrate(self):
+    return {"widget1": "widget 1 content", "widget2": "widget 2 content"}
+```
+
 ## Feature roadmap
 Planned:
 - More customization options
-- Expanded module options with multi-column widgets
 - Non-blocking external API updates
 - Faster frontend Docker image builds
