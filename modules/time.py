@@ -5,7 +5,7 @@ from inkymodule import InkyModule
 MODULE_NAME = "time"
 REFRESH_INTERVAL = 1
 LABEL = "TIME"
-SIZE = "medium"
+SIZE = "large"
 DEFAULT_CONFIG = {"format": "%-I:%M %p"}
 PARAMS = []
 
