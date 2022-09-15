@@ -1,5 +1,5 @@
 # Use this to change widget order or disable ones you don't want
-modules = ["freebusy", "time", "weather"]
+modules = ["freebusy", "weather", "time"]
 
 [time]
 format = "%-I:%M %p"
