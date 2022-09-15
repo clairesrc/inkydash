@@ -51,17 +51,7 @@ $ scp -rv inkydash pi@raspberrypi:~/inkydash
 
 
 ### On your Raspberry Pi
-If you don't have `docker-compose` set up, run these on your Raspberry Pi.
-```
-$ curl -fsSL https://get.docker.com -o get-docker.sh
-$ sudo apt install -y docker-compose
-$ sudo sh get-docker.
-sh
-$ sudo usermod -aG docker $USER
-$ sudo systemctl start docker
-$ sudo systemctl enable docker
-## Then log out of your SSH session or reboot your Raspberry Pi to refresh your user group. 
-```
+Set up [Docker](https://duckduckgo.com/?q=docker+raspberry+pi&t=ha&va=j&ia=web) and [docker-compose](https://duckduckgo.com/?q=docker-compose+raspberry+pi&t=ha&va=j&ia=web).
 
 `cd` to the directory you just copied over from your PC, then run:
 ```
