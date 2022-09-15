@@ -76,7 +76,7 @@ class module(InkyModule):
 
         if len(busy) > 1:
             next = (
-                "Next meeting \n"
+                "Next meeting<br />"
                 + parser.parse(busy[1]["start"]).strftime("%-I:%M %p")
                 + "-"
                 + parser.parse(busy[1]["end"]).strftime("%-I:%M %p")
