@@ -2,7 +2,7 @@
 modules = ["freebusy", "time", "weather"]
 
 [time]
-format = "%I:%M %p"
+format = "%-I:%M %p"
 
 [freebusy]
 free_indicator = "FREE"
