@@ -7,8 +7,7 @@ InkyDash should start when the Raspberry Pi boots. You can alter the contents of
 This repository contains the backend API code and everything an end-user needs to set up InkyDash on their Pi. For the Inky HAT frontend's source code, see [clairesrc/inkydash-frontend](https://github.com/clairesrc/inkydash-frontend).
 
 ## Preview
-
-![image0](https://user-images.githubusercontent.com/22794371/189393215-f9f5f492-9d88-431c-9473-89ad479f4bf0.jpeg)
+![IMG_0572](https://user-images.githubusercontent.com/22794371/190328360-36fff0b2-f054-47de-bfee-7a26a922ddcd.jpg)
 
 ## Requirements
 ### Hardware
@@ -56,7 +55,8 @@ If you don't have `docker-compose` set up, run these on your Raspberry Pi.
 ```
 $ curl -fsSL https://get.docker.com -o get-docker.sh
 $ sudo apt install -y docker-compose
-$ sudo sh get-docker.sh
+$ sudo sh get-docker.
+sh
 $ sudo usermod -aG docker $USER
 $ sudo systemctl start docker
 $ sudo systemctl enable docker
