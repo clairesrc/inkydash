@@ -6,7 +6,7 @@ MODULE_NAME = "time"
 REFRESH_INTERVAL = 1
 LABEL = "TIME"
 SIZE = "medium"
-DEFAULT_CONFIG = {"format": "%I:%M %p"}
+DEFAULT_CONFIG = {"format": "%-I:%M %p"}
 PARAMS = []
 
 
