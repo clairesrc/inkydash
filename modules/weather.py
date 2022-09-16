@@ -36,12 +36,14 @@ class module(InkyModule):
         ).json()
         weather_feels_like_temp = math.ceil(data["main"]["feels_like"])
         weather_status = data["weather"][0]["main"]
+        iconid = data["weather"][0]["icon"]
+        icon = f"http://openweathermap.org/img/wn/{iconid}@2x.png"
         unit = "F"
         if unit_config == "metric":
             unit = "C"
         return {
             "temperature": f"{weather_feels_like_temp}°{unit}",
-            "weather": weather_status,
+            "weather": f"<img src={icon} /> {weather_status}",
         }
 
     def __get_geo(ip):
