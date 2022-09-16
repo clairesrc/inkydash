@@ -1,6 +1,6 @@
 from datetime import timedelta
 from requests import get
-import os
+import math
 
 from inkymodule import InkyModule
 from modules.freebusy import DEFAULT_CONFIG
@@ -34,7 +34,7 @@ class module(InkyModule):
         data = get(
             f"https://api.openweathermap.org/data/2.5/weather?lat={self.__lat}&lon={self.__lon}&units={unit_config}&appid={key}"
         ).json()
-        weather_feels_like_temp = data["main"]["feels_like"]
+        weather_feels_like_temp = math.ceil(data["main"]["feels_like"])
         weather_status = data["weather"][0]["main"]
         unit = "F"
         if unit_config == "metric":
