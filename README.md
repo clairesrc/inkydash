@@ -66,7 +66,7 @@ To apply a new theme, set `INKYDASH_THEME` to the desired value in `.env` and ru
 |---------|------|
 |![screenshot](https://user-images.githubusercontent.com/22794371/190538435-276db826-f517-4cb9-bc6c-acf487884955.png)|![screenshot](https://user-images.githubusercontent.com/22794371/190538502-6c0dc78b-b9d4-42a5-9184-c29dc5c90bd1.png)|
 
-These are just basic examples -- with full CSS support amd flexible markup, you can change the layout, fonts, colors (dithering support is built-in for 7-color displays), or add graphics as desired. To contribute a new theme check out the [frontend repo](https://github.com/clairesrc/inkydash-frontend).
+These are just basic examples -- given full CSS support and flexible markup, you can change the layout, fonts, colors (dithering support is built-in for 7-color displays), or add graphics as desired. To contribute a new theme check out the [frontend repo](https://github.com/clairesrc/inkydash-frontend).
 
 ## Writing modules
 Add your module file to `modules/` and it will be auto-loaded at startup. Remember to also add it to the `modules` array in `config/inkydash.toml`.
