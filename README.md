@@ -41,6 +41,7 @@ Create an `.env` file and set the following values:
 ```
 OPENWEATHERMAP_WEATHER_API_SECRET=
 TZ=America/Chicago
+THEME=default
 ```
 
 Copy the entire directory to your Raspberry Pi over SSH using `scp`:
@@ -58,6 +59,9 @@ Set up [Docker](https://duckduckgo.com/?q=docker+raspberry+pi&t=ha&va=j&ia=web) 
 $ docker-compose up -d
 ```
 
+## Theming
+InkyDash supports CSS-based theming. Currently it ships with 2 themes, `default` and `light`.
+To apply a new theme, set `INKYDASH_THEME` to the desired value in `.env` and run `docker-compose up -d` on your Raspberry Pi.
 
 ## Writing modules
 Add your module file to `modules/` and it will be auto-loaded at startup. Remember to also add it to the `modules` array in `config/inkydash.toml`.

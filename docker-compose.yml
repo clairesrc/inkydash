@@ -17,6 +17,8 @@ services:
     container_name: inkydash-frontend
     restart: unless-stopped
     privileged: true
+    environment:
+      - INKYDASH_THEME=${INKYDASH_THEME}
     devices:
       - /dev/gpiomem:/dev/gpiomem
       - /dev/ttyAMA0:/dev/ttyAMA0
