@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from inkymodule import InkyModule
 
 MODULE_NAME = "time"
-REFRESH_INTERVAL = 1
+REFRESH_INTERVAL = 0
 LABEL = "TIME"
 SIZE = "medium"
 DEFAULT_CONFIG = {"format": "%-I:%M %p"}
