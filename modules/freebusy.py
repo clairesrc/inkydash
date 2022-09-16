@@ -75,7 +75,7 @@ class module(InkyModule):
                 busy_event_index = i
                 freebusy = config["busy_indicator"]
             if (
-                i > busy_event_index
+                i > busy_event_index and event_start > now
             ):  # don't show currently active event in next meeting section
                 next = (
                     "Next meeting<br />"
