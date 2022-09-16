@@ -6,9 +6,6 @@ InkyDash should start when the Raspberry Pi boots. You can alter the contents of
 
 This repository contains the backend API code and everything an end-user needs to set up InkyDash on their Pi. For the Inky HAT frontend's source code, see [clairesrc/inkydash-frontend](https://github.com/clairesrc/inkydash-frontend).
 
-## Preview
-![IMG_0572](https://user-images.githubusercontent.com/22794371/190328360-36fff0b2-f054-47de-bfee-7a26a922ddcd.jpg)
-
 ## Requirements
 ### Hardware
 - Raspberry Pi: tested on a 4B+ model running Raspbian.
@@ -64,7 +61,7 @@ InkyDash supports CSS-based theming. Currently it ships with 2 themes, `default`
 To apply a new theme, set `INKYDASH_THEME` to the desired value in `.env` and run `docker-compose up -d` on your Raspberry Pi.
 | default | light |
 |---------|------|
-|![screenshot](https://user-images.githubusercontent.com/22794371/190538435-276db826-f517-4cb9-bc6c-acf487884955.png)|![screenshot](https://user-images.githubusercontent.com/22794371/190538502-6c0dc78b-b9d4-42a5-9184-c29dc5c90bd1.png)|
+|![screenshot](https://raw.githubusercontent.com/clairesrc/inkydash-frontend/main/screenshot-dark.png)|![screenshot](https://raw.githubusercontent.com/clairesrc/inkydash-frontend/main/screenshot-light.png)|
 
 These are just basic examples -- given full CSS support and flexible markup, you can change the layout, fonts, colors (dithering support is built-in for 7-color displays), or add graphics as desired. To contribute a new theme check out the [frontend repo](https://github.com/clairesrc/inkydash-frontend).
 
