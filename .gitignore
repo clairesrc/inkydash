@@ -1,4 +1,5 @@
 .env
+.env.bak
 __cache__
 __pycache__
 .cache
