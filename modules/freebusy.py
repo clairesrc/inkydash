@@ -63,8 +63,7 @@ class module(InkyModule):
             .execute()
         )
         busy = eventsResult["calendars"]["primary"]["busy"]
-        if len(busy) > 0:
-            event = busy[0]
+        for event in busy:
             event_start = (
                 parser.parse(event["start"])
                 - timedelta(minutes=config["meeting_buffer"])
