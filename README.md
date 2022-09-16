@@ -64,7 +64,7 @@ InkyDash supports CSS-based theming. Currently it ships with 2 themes, `default`
 To apply a new theme, set `INKYDASH_THEME` to the desired value in `.env` and run `docker-compose up -d` on your Raspberry Pi.
 | default | light |
 |---------|------|
-|![screenshot](https://user-images.githubusercontent.com/22794371/190536658-999e962c-97e9-47b7-aa82-f9a995051daa.png)|![screenshot](https://user-images.githubusercontent.com/22794371/190536494-7f4f8ff7-ee66-4212-a310-c5ce2183691b.png)|
+|![screenshot](https://user-images.githubusercontent.com/22794371/190538435-276db826-f517-4cb9-bc6c-acf487884955.png)|![screenshot](https://user-images.githubusercontent.com/22794371/190538502-6c0dc78b-b9d4-42a5-9184-c29dc5c90bd1.png)|
 
 These are just basic examples -- with full CSS support amd flexible markup, you can change the layout, fonts, colors (dithering support is built-in for 7-color displays), or add graphics as desired. To contribute a new theme check out the [frontend repo](https://github.com/clairesrc/inkydash-frontend).
 
