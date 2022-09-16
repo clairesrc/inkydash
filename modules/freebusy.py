@@ -63,7 +63,8 @@ class module(InkyModule):
             .execute()
         )
         busy = eventsResult["calendars"]["primary"]["busy"]
-        for event in busy:
+        busy_event_index = -1
+        for i, event in enumerate(busy):
             event_start = (
                 parser.parse(event["start"])
                 - timedelta(minutes=config["meeting_buffer"])
@@ -71,14 +72,18 @@ class module(InkyModule):
             event_end = parser.parse(event["end"]).astimezone()
 
             if event_start <= now <= event_end:
+                busy_event_index = i
                 freebusy = config["busy_indicator"]
 
-        if len(busy) > 1:
-            next = (
-                "Next meeting<br />"
-                + parser.parse(busy[1]["start"]).strftime("%-I:%M %p")
-                + "-"
-                + parser.parse(busy[1]["end"]).strftime("%-I:%M %p")
-            )
+        for i, event in enumerate(busy):
+            if (
+                i != busy_event_index
+            ):  # don't show currently active event in next meeting section
+                next = (
+                    "Next meeting<br />"
+                    + parser.parse(event["start"]).strftime("%-I:%M %p")
+                    + "-"
+                    + parser.parse(event["end"]).strftime("%-I:%M %p")
+                )
 
         return {"freebusy": freebusy, "next": next}
