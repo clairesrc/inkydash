@@ -1,4 +1,4 @@
-FROM python:3.10-alpine
+FROM python:alpine
 
 ENV OPENWEATHERMAP_WEATHER_API_SECRET ""
 ENV TZ "America/Chicago"
