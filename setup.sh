@@ -63,8 +63,8 @@ if [ -z $PI_IP ]; then
 fi
 printf "\n"
 read -p "Raspberry Pi username: [pi]" PI_USERNAME
-if [ -z $PI_IP ]; then
-    PI_IP="pi"
+if [ -z $PI_USERNAME ]; then
+    PI_USERNAME="pi"
 fi
 
 scp -r ./* $PI_USERNAME@$PI_IP:~/inkydash
