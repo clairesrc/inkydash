@@ -29,7 +29,7 @@ if [ -e "$BASEDIR/credentials/inkydash.json" ]; then
 else
     printf "\n\nCreate a Google Developer project: https://developers.google.com/workspace/guides/create-project"
     echo "Then, create credentials for a DESKTOP application: https://developers.google.com/workspace/guides/create-credentials"
-    read -p "When finished, paste credentials Oauth JSON here:" GCAL_CREDS
+    read -p "When finished, paste credentials Oauth JSON here and press Enter:" GCAL_CREDS
 
     if [ -z $GCAL_CREDS ]; then
         echo "Error: empty Google Calendar credentials"
